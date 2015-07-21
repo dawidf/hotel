@@ -1,0 +1,8 @@
+hotel_admin_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HotelAdminBundle:Default:index }
+
+hotel_admin_controllers:
+    resource: "@HotelAdminBundle/Controller/"
+    type: annotation
+    prefix:   /

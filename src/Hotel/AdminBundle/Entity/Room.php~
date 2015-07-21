@@ -1,0 +1,58 @@
+<?php
+
+namespace Hotel\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Room
+ *
+ * @ORM\Table(name="rooms")
+ * @ORM\Entity(repositoryClass="Hotel\AdminBundle\Entity\RoomRepository")
+ */
+class Room
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="room_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @ORM\Column(name="number_of_people", type="integer", length=2)
+     */
+    private $numberOfPeople;
+    /**
+     * @ORM\Column(name="for_smoking_people", type="boolean")
+     */
+    private $forSmokingPeople;
+    /**
+     * @ORM\Column(name="room_number", type="string", length=5)
+     */
+    private $roomNumber;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Floor", inversedBy="rooms")
+     * @ORM\JoinColumn(name="floor_id", referencedColumnName="floor_id")
+     */
+    private $floor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="room")
+     */
+    private $reservations;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

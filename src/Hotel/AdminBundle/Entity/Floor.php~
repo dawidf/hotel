@@ -1,0 +1,43 @@
+<?php
+
+namespace Hotel\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Floor
+ *
+ * @ORM\Table(name="floors")
+ * @ORM\Entity(repositoryClass="Hotel\AdminBundle\Entity\FloorRepository")
+ */
+class Floor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="floor_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="floor_floor", type="integer", length=7)
+     */
+    private $floor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Room", mappedBy="floor")
+     */
+    private $rooms;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
