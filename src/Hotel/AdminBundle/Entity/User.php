@@ -24,18 +24,44 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="The name is too short.",
-     *     maxMessage="The name is too long.",
-     *     groups={"Registration", "Profile"}
-     * )
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
-    protected $name;
+    private $name;
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    private $surname;
+    /**
+     * @ORM\Column(type="string", length=95)
+     * @Assert\NotBlank()
+     */
+    private $adress;
+    /**
+     * @ORM\Column(type="string", length=6)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="6", min="5")
+     */
+    private $postalCode;
+    /**
+     * @ORM\Column(type="string", length=35)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="35")
+     */
+    private $city;
+    /**
+     * @ORM\Column(type="string", length=15)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="7", max="15")
+     */
+    private $phoneNumber;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="client")
+     */
+    private $reservations;
 
 
     /**
@@ -69,5 +95,163 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+
+
+    }
+
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     * @return User
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string 
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * Set adress
+     *
+     * @param string $adress
+     * @return User
+     */
+    public function setAdress($adress)
+    {
+        $this->adress = $adress;
+
+        return $this;
+    }
+
+    /**
+     * Get adress
+     *
+     * @return string 
+     */
+    public function getAdress()
+    {
+        return $this->adress;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param string $postalCode
+     * @return User
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return string 
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string 
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Add reservations
+     *
+     * @param \Hotel\AdminBundle\Entity\Reservation $reservations
+     * @return User
+     */
+    public function addReservation(\Hotel\AdminBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations[] = $reservations;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \Hotel\AdminBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\Hotel\AdminBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations->removeElement($reservations);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

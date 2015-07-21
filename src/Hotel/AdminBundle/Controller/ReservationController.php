@@ -27,6 +27,7 @@ class ReservationController extends Controller
      */
     public function indexAction()
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('HotelAdminBundle:Reservation')->findAll();

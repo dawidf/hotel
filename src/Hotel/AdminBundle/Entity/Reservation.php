@@ -54,12 +54,10 @@ class Reservation
     private $room;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Client", inversedBy="reservations")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\User", inversedBy="reservations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $client;
-
-
 
     /**
      * Get id
