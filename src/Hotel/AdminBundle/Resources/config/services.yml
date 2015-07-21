@@ -1,4 +1,9 @@
-services:
+#services:
 #    hotel_admin.example:
 #        class: Hotel\AdminBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+services:
+    acme_user.registration.form.type:
+        class: Hotel\AdminBundle\Form\RegistrationFormType
+        tags:
+            - { name: form.type, alias: hotel_admin_bundle_registration_form_type }

@@ -3,12 +3,16 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use PUGX\ExtraValidatorBundle\Validator\Constraints as ExtraAssert;
+
 
 /**
  * Reservation
  *
  * @ORM\Table(name="reservations")
  * @ORM\Entity(repositoryClass="Hotel\AdminBundle\Entity\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
@@ -26,10 +30,14 @@ class Reservation
      */
     private $reservedDate;
     /**
+     * @ExtraAssert\MinDate(limit="now")
+     * @Assert\NotBlank()
      * @ORM\Column(name="date_for_reservation", type="datetime")
      */
-    private $dateForReservation;
+    protected $dateForReservation;
     /**
+     * @ExtraAssert\MinDate(limit="now")
+     * @Assert\NotBlank()
      * @ORM\Column(name="date_for_end_of_reservation", type="datetime")
      */
     private $dateForEndOfReservation;
@@ -39,13 +47,15 @@ class Reservation
     private $services;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Room", inversedBy="reservations")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="room_id")
      */
     private $room;
 
     /**
-     * @ORM\OneToOne(targetEntity="Hotel\AdminBundle\Entity\Client", inversedBy="reservation")
+     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Client", inversedBy="reservations")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     private $client;
 
@@ -197,5 +207,13 @@ class Reservation
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCurrentDateTime()
+    {
+        $this->reservedDate = new \DateTime();
     }
 }

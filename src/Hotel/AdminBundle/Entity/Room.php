@@ -3,6 +3,7 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Room
@@ -23,6 +24,7 @@ class Room
 
 
     /**
+     * @NotBlank()
      * @ORM\Column(name="number_of_people", type="integer", length=2)
      */
     private $numberOfPeople;
@@ -31,11 +33,14 @@ class Room
      */
     private $forSmokingPeople;
     /**
+     * @NotBlank()
      * @ORM\Column(name="room_number", type="string", length=5)
+     *
      */
     private $roomNumber;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Floor", inversedBy="rooms")
      * @ORM\JoinColumn(name="floor_id", referencedColumnName="floor_id")
      */

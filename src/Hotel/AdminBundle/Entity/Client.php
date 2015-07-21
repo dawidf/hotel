@@ -3,6 +3,9 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Client
@@ -22,37 +25,48 @@ class Client
     private $id;
     /**
      * @ORM\Column(type="string", length=50)
+     * @NotBlank()
      */
     private $name;
     /**
      * @ORM\Column(type="string", length=50)
+     * @NotBlank()
      */
     private $surname;
     /**
      * @ORM\Column(type="string", length=95)
+     * @NotBlank()
      */
     private $adress;
     /**
      * @ORM\Column(type="string", length=6)
+     * @NotBlank()
+     * @Length(max="6", min="5")
      */
     private $postalCode;
     /**
      * @ORM\Column(type="string", length=35)
+     * @NotBlank()
+     * @Length(max="35")
      */
     private $city;
     /**
      * @ORM\Column(type="string", length=15)
+     * @NotBlank()
+     * @Length(min="7", max="15")
      */
     private $phoneNumber;
     /**
      * @ORM\Column(type="string", length=65)
+     * @Email()
+     * @NotBlank()
      */
     private $email;
 
     /**
-     * @ORM\OneToOne(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="client")
      */
-    private $reservation;
+    private $reservations;
 
 
     /**
@@ -247,5 +261,45 @@ class Client
     public function getReservation()
     {
         return $this->reservation;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reservations
+     *
+     * @param \Hotel\AdminBundle\Entity\Reservation $reservations
+     * @return Client
+     */
+    public function addReservation(\Hotel\AdminBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations[] = $reservations;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \Hotel\AdminBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\Hotel\AdminBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations->removeElement($reservations);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

@@ -3,12 +3,17 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Floor
  *
  * @ORM\Table(name="floors")
  * @ORM\Entity(repositoryClass="Hotel\AdminBundle\Entity\FloorRepository")
+ *
+ * @UniqueEntity(fields={"floor"})
  */
 class Floor
 {
@@ -22,6 +27,7 @@ class Floor
     private $id;
 
     /**
+     * @NotBlank()
      * @ORM\Column(name="floor_floor", type="integer", length=7)
      */
     private $floor;
