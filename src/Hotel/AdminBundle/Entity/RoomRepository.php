@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class RoomRepository extends EntityRepository
 {
+    public function getAvalibleRooms($params = array())
+    {
+        $qb = $this->createQueryBuilder('room_repository')
+            ->select('room_repository')
+            ->leftJoin('room_repository.reservations', 'reservations')
+            ->where('reservations.dateForReservation >= :date')
+                ->setParameter('date', $params['date'])
+            ->andWhere('room_repository.numberOfPeople = :numbersOfRooms')
+                ->setParameter('numbersOfRooms', $params['numbersOfRooms'])
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

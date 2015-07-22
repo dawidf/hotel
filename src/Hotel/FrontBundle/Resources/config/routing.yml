@@ -1,0 +1,8 @@
+hotel_front_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HotelFrontBundle:Default:index }
+
+hotel_front_controllers:
+    resource: "@HotelFrontBundle/Controller/"
+    type: annotation
+    prefix:   /

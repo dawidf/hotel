@@ -10,6 +10,11 @@
     </head>
     <body>
     <div class="container">
+        {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+
+        {{ flashMessage }}
+
+        {% endfor %}
         {% block body %}{% endblock %}
     </div>
 

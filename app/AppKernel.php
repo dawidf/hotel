@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new Hotel\AdminBundle\HotelAdminBundle(),
             new PUGX\ExtraValidatorBundle\PUGXExtraValidatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Hotel\FrontBundle\HotelFrontBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

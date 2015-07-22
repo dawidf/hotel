@@ -99,6 +99,33 @@ class RoomController extends Controller
         );
     }
 
+
+    /**
+     * @Template()
+     * @Route("/check_is_avalible_rooms", name="check_is_avalible_rooms")
+     */
+    public function searchAction(Request $request)
+    {
+
+        $params = array();
+        $params['date'] = $request->query->get('date');
+        $params['numbersOfRooms'] = $request->query->get('numbersOfRooms');
+
+
+
+        $RoomsRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
+        $qb = $RoomsRepo->getAvalibleRooms($params);
+
+
+
+
+        return array(
+            'avalibleRooms' => $qb
+        );
+
+
+    }
+
     /**
      * Finds and displays a Room entity.
      *
@@ -244,4 +271,6 @@ class RoomController extends Controller
             ->getForm()
         ;
     }
+
+
 }

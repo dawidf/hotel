@@ -32,15 +32,14 @@ class Reservation
     /**
      * @ExtraAssert\MinDate(limit="now")
      * @Assert\NotBlank()
-     * @ORM\Column(name="date_for_reservation", type="datetime")
+     * @ORM\Column(name="start_reservation", type="datetime")
      */
-    protected $dateForReservation;
+    protected $startReservation;
     /**
-     * @ExtraAssert\MinDate(limit="now")
      * @Assert\NotBlank()
-     * @ORM\Column(name="date_for_end_of_reservation", type="datetime")
+     * @ORM\Column(name="for_days", type="integer")
      */
-    private $dateForEndOfReservation;
+    private $forDays;
     /**
      * @ORM\Column(type="array")
      */
@@ -213,5 +212,51 @@ class Reservation
     public function setCurrentDateTime()
     {
         $this->reservedDate = new \DateTime();
+    }
+
+    /**
+     * Set startReservation
+     *
+     * @param \DateTime $startReservation
+     * @return Reservation
+     */
+    public function setStartReservation($startReservation)
+    {
+        $this->startReservation = $startReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get startReservation
+     *
+     * @return \DateTime 
+     */
+    public function getStartReservation()
+    {
+        return $this->startReservation;
+    }
+
+    /**
+     * Set forDays
+     *
+     * @param integer $forDays
+     * @return Reservation
+     */
+    public function setForDays($forDays)
+    {
+        $this->forDays = $forDays;
+
+        return $this;
+    }
+
+    /**
+     * Get forDays
+     *
+     * @return integer 
+     */
+    public function getForDays()
+    {
+        return $this->forDays;
     }
 }
