@@ -14,14 +14,28 @@ class RoomRepository extends EntityRepository
 {
     public function getAvalibleRooms($params = array())
     {
+        $date = date_create($params['date']);
+
+
         $qb = $this->createQueryBuilder('room_repository')
-            ->select('room_repository')
+            ->select('room_repository', 'reservations')
             ->leftJoin('room_repository.reservations', 'reservations')
-            ->where('reservations.dateForReservation >= :date')
-                ->setParameter('date', $params['date'])
+            ->where("reservations.startReservation > :date")
+                ->setParameter(':date', $params['date'])
+            ->andWhere("reservations.startReservation < DATE_ADD(:endReservation, :days, 'day')")
+                ->setParameter(':endReservation', $date)
+                ->setParameter(':days', $params['days'])
+//            ->where('reservations.reservedDate >= :date')
+//                ->setParameter('date', $params['date'])
+//            ->andWhere('reservations.reservedDate <= :endReservation')
+//                ->setParameter(':endReservation', $endReservation)
             ->andWhere('room_repository.numberOfPeople = :numbersOfRooms')
                 ->setParameter('numbersOfRooms', $params['numbersOfRooms'])
+//
         ;
+
+
+
 
         return $qb->getQuery()->getArrayResult();
     }

@@ -107,10 +107,30 @@ class RoomController extends Controller
     public function searchAction(Request $request)
     {
 
+        var_dump($request->query);
         $params = array();
         $params['date'] = $request->query->get('date');
         $params['numbersOfRooms'] = $request->query->get('numbersOfRooms');
+        $params['days'] = $request->query->get('days');
 
+
+//        $em = $this->getDoctrine()->getManager();
+//        $query = $em->createQuery('
+//            select r, (start_reservation + interval r.for_days day) as end_reservation
+//            from HotelAdminBundle:Room where start_reservation > "2015-07-05"
+//            GROUP BY id HAVING end_reservation > "2015-07-06"
+//        ')
+//
+//        ;
+//        $query = $em->createQuery('
+//            select r.id, r.start_reservation + interval r.for_days days as end_reservation
+//            from HotelAdminBundle:Room r
+//        ');
+
+
+
+
+//        $products = $query->getResult();
 
 
         $RoomsRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
