@@ -3,6 +3,7 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * RoomRepository
@@ -15,22 +16,27 @@ class RoomRepository extends EntityRepository
     public function getAvalibleRooms($params = array())
     {
         $date = date_create($params['date']);
+        $endDate = date('Y-m-d', strtotime($params['date']. ' + 1 days'));
+
+        var_dump($date);
 
 
         $qb = $this->createQueryBuilder('room_repository')
-            ->select('room_repository', 'reservations')
+            ->select('room_repository', 'reservations', '(DATE_ADD(reservations.startReservation, 100, day)) as dupa')
             ->leftJoin('room_repository.reservations', 'reservations')
+//            ->where('reservations.startReservation = :currentDate')
+//                ->setParameter(':currentDate', '2015-07-30')
             ->where("reservations.startReservation > :date")
-                ->setParameter(':date', $params['date'])
-            ->andWhere("reservations.startReservation < DATE_ADD(:endReservation, :days, 'day')")
-                ->setParameter(':endReservation', $date)
-                ->setParameter(':days', $params['days'])
-//            ->where('reservations.reservedDate >= :date')
-//                ->setParameter('date', $params['date'])
-//            ->andWhere('reservations.reservedDate <= :endReservation')
-//                ->setParameter(':endReservation', $endReservation)
-            ->andWhere('room_repository.numberOfPeople = :numbersOfRooms')
-                ->setParameter('numbersOfRooms', $params['numbersOfRooms'])
+                ->setParameter(':date', $date)
+//            ->where("(DATE_ADD('reservations.startReservation', '100', 'day')) < '2015-07-18'")
+//                ->setParameter(':date', $date)
+//                ->setParameter(':days', $params['days'])
+////            ->where('reservations.reservedDate >= :date')
+////                ->setParameter('date', $params['date'])
+////            ->andWhere('reservations.reservedDate <= :endReservation')
+////                ->setParameter(':endReservation', $endReservation)
+//            ->andWhere('room_repository.numberOfPeople = :numbersOfRooms')
+//                ->setParameter('numbersOfRooms', $params['numbersOfRooms'])
 //
         ;
 

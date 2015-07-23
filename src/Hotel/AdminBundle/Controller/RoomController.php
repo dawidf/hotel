@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Hotel\AdminBundle\Entity\Room;
 use Hotel\AdminBundle\Form\RoomType;
 
+
 /**
  * Room controller.
  *
@@ -31,6 +32,9 @@ class RoomController extends Controller
 
         $entities = $em->getRepository('HotelAdminBundle:Room')->findAll();
 
+        $date = new \DateTime();
+
+        var_dump($date);
         return array(
             'entities' => $entities,
         );
@@ -133,9 +137,22 @@ class RoomController extends Controller
 //        $products = $query->getResult();
 
 
-        $RoomsRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
-        $qb = $RoomsRepo->getAvalibleRooms($params);
+//        $RoomsRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
+//        $qb = $RoomsRepo->getAvalibleRooms($params);
 
+
+
+
+
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+            SELECT room, res
+            FROM HotelAdminBundle:Room room
+            JOIN room.reservations res
+            WHERE res.startReservation > :date
+        ')->setParameter('date', '2015-07-25');
+        $qb = $query->getResult();
 
 
 
