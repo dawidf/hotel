@@ -77,4 +77,142 @@ class News
     {
         return $this->id;
     }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return News
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return News
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return News
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return News
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set modifiedDate
+     *
+     * @param \DateTime $modifiedDate
+     * @return News
+     */
+    public function setModifiedDate($modifiedDate)
+    {
+        $this->modifiedDate = $modifiedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get modifiedDate
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedDate()
+    {
+        return $this->modifiedDate;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Hotel\AdminBundle\Entity\User $author
+     * @return News
+     */
+    public function setAuthor(\Hotel\AdminBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Hotel\AdminBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 }

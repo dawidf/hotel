@@ -32,13 +32,13 @@ class Reservation
     /**
      * @ExtraAssert\MinDate(limit="today")
      * @Assert\NotBlank()
-     * @ORM\Column(name="start_reservation", type="datetime")
+     * @ORM\Column(name="start_reservation", type="date")
      */
     protected $startReservation;
     /**
      * @ExtraAssert\MinDate(limit="today")
      * @Assert\NotBlank()
-     * @ORM\Column(name="end_reservation", type="datetime")
+     * @ORM\Column(name="end_reservation", type="date")
      */
     protected $endReservation;
     /**
@@ -93,14 +93,14 @@ class Reservation
     }
 
     /**
-     * Set dateForReservation
+     * Set $startReservation
      *
-     * @param \DateTime $dateForReservation
+     * @param \DateTime $startReservation
      * @return Reservation
      */
-    public function setDateForReservation($dateForReservation)
+    public function setDateForReservation($startReservation)
     {
-        $this->dateForReservation = $dateForReservation;
+        $this->dateForReservation = $startReservation;
 
         return $this;
     }
@@ -112,18 +112,18 @@ class Reservation
      */
     public function getDateForReservation()
     {
-        return $this->dateForReservation;
+        return $this->startReservation;
     }
 
     /**
      * Set dateForEndOfReservation
      *
-     * @param \DateTime $dateForEndOfReservation
+     * @param \DateTime $endReservation
      * @return Reservation
      */
-    public function setDateForEndOfReservation($dateForEndOfReservation)
+    public function setDateForEndOfReservation($endReservation)
     {
-        $this->dateForEndOfReservation = $dateForEndOfReservation;
+        $this->dateForEndOfReservation = $endReservation;
 
         return $this;
     }
@@ -135,7 +135,7 @@ class Reservation
      */
     public function getDateForEndOfReservation()
     {
-        return $this->dateForEndOfReservation;
+        return $this->endReservation;
     }
 
     /**
@@ -212,7 +212,11 @@ class Reservation
      */
     public function setCurrentDateTime()
     {
-        $this->reservedDate = new \DateTime();
+        if($this->reservedDate == null)
+        {
+            $this->reservedDate = new \DateTime();
+        }
+
     }
 
     /**
@@ -235,6 +239,7 @@ class Reservation
      */
     public function getStartReservation()
     {
+
         return $this->startReservation;
     }
 
@@ -282,5 +287,28 @@ class Reservation
     public function getEndReservation()
     {
         return $this->endReservation;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Hotel\AdminBundle\Entity\User $user
+     * @return Reservation
+     */
+    public function setUser(\Hotel\AdminBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Hotel\AdminBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

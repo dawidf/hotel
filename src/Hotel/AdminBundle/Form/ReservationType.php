@@ -16,8 +16,8 @@ class ReservationType extends AbstractType
     {
         $builder
 
-            ->add('startReservation', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
-            ->add('endReservation', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
+            ->add('startReservation', 'datetime', array('widget' => 'single_text', 'html5' => false, 'format' => 'yyyy-MM-dd',))
+            ->add('endReservation', 'datetime', array('widget' => 'single_text', 'html5' => false, 'format' => 'yyyy-MM-dd',))
             ->add('services', 'choice', array(
                 'choices' => array(
                     'service'  => array('breakfast', 'lunch', 'dinner'),
