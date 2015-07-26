@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Reservation creation</h1>
 
-    {{ form(form) }}
+    {{ form(form, {'attr': {'novalidate': 'true'}}) }}
 
         <ul class="record_actions">
     <li>

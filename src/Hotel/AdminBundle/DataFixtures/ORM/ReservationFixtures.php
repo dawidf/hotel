@@ -26,12 +26,13 @@ class ReservationFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function load(ObjectManager $manager)
     {
+
         $reservations = array(
             array(
                 'roomNumber' => 101,
                 'reservedDate' => '2015-07-15',
                 'services' => array('sniadanie'),
-                'startReservation' => '2015-07-23',
+                'startReservation' => '2015-07-30',
                 'endReservation' => '2015-07-27',
                 'email' => 'admin4@admin.pl'
             ),
@@ -42,21 +43,24 @@ class ReservationFixtures extends AbstractFixture implements OrderedFixtureInter
                 'startReservation' => '2015-07-16',
                 'endReservation' => '2015-07-23',
                 'email' => 'admin2@admin.pl'
-            ),array(
+            ),
+            array(
                 'roomNumber' => 103,
                 'reservedDate' => '2015-07-15',
                 'services' => array('sniadanie'),
                 'startReservation' => '2015-07-30',
                 'endReservation' => '2015-08-23',
                 'email' => 'admin3@admin.pl'
-            ),array(
+            ),
+            array(
                 'roomNumber' => 104,
                 'reservedDate' => '2015-07-25',
                 'services' => array('sniadanie'),
                 'startReservation' => '2015-07-25',
                 'endReservation' => '2015-07-29',
                 'email' => 'admin1@admin.pl'
-            ),array(
+            ),
+            array(
                 'roomNumber' => 105,
                 'reservedDate' => '2015-07-13',
                 'services' => array('sniadanie'),
@@ -70,15 +74,33 @@ class ReservationFixtures extends AbstractFixture implements OrderedFixtureInter
                 'startReservation' => '2015-07-13',
                 'endReservation' => '2015-07-23',
                 'email' => 'admin2@admin.pl'
-            ),array(
+            ),
+            array(
                 'roomNumber' => 106,
                 'reservedDate' => '2015-07-13',
                 'services' => array('sniadanie'),
                 'startReservation' => '2015-07-13',
                 'endReservation' => '2015-07-23',
                 'email' => 'admin3@admin.pl'
-            ),array(
+            ),
+            array(
                 'roomNumber' => 107,
+                'reservedDate' => '2015-07-13',
+                'services' => array('sniadanie'),
+                'startReservation' => '2015-07-13',
+                'endReservation' => '2015-07-29',
+                'email' => 'admin4@admin.pl'
+            ),
+            array(
+                'roomNumber' => 108,
+                'reservedDate' => '2015-07-13',
+                'services' => array('sniadanie'),
+                'startReservation' => '2015-07-13',
+                'endReservation' => '2015-07-29',
+                'email' => 'admin4@admin.pl'
+            ),
+            array(
+                'roomNumber' => 100,
                 'reservedDate' => '2015-07-13',
                 'services' => array('sniadanie'),
                 'startReservation' => '2015-07-13',
@@ -91,16 +113,23 @@ class ReservationFixtures extends AbstractFixture implements OrderedFixtureInter
             $Reservation = new Reservation();
 
             $reservedDate = date_create($details['reservedDate']);
-            $startDate = date_create($details['startReservation']);
-            $endReservation = date_create($details['endReservation']);
+//            $startDate = date_create($details['startReservation']);
+//            $endReservation = date_create($details['endReservation']);
+
+            $startReservation = strtotime("+7 day", time());
+            $startReservation = date('Y-m-d', $startReservation);
+
+            $endReservation = strtotime($startReservation);
+            $endReservation = strtotime('+'.rand(1,7).' day', $endReservation);
+            $endReservation = date('Y-m-d', $endReservation);
 
             $Reservation
                 ->setReservedDate($reservedDate)
                 ->setServices($details['services'])
-                ->setStartReservation($startDate)
-                ->setEndReservation($endReservation)
+                ->setStartReservation(date_create($startReservation))
+                ->setEndReservation(date_create($endReservation))
                 ->setRoom($this->getReference('room_'.$details['roomNumber']))
-                ->setClient($this->getReference('client_'.$details['email']))
+                ->setUser($this->getReference('client_'.$details['email']))
             ;
 
 

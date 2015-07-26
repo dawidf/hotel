@@ -2,7 +2,7 @@
 {% block body %}
     <form class="right-side" action="{{ path('check_is_avalible_rooms') }}">
         <input type="text" name="date" value="{{ searchedRoom is defined ? searchedRoom : '' }}" placeholder="Wyszukaj">
-        <select name="numbersOfRooms">
+        <select name="numberOfPeople">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

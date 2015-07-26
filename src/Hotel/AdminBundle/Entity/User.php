@@ -59,9 +59,14 @@ class User extends BaseUser
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Reservation", mappedBy="user")
      */
     private $reservations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\News", mappedBy="author")
+     */
+    private $news;
 
 
     /**

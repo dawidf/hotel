@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new PUGX\ExtraValidatorBundle\PUGXExtraValidatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Hotel\FrontBundle\HotelFrontBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         );
 

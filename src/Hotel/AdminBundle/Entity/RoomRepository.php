@@ -15,34 +15,40 @@ class RoomRepository extends EntityRepository
 {
     public function getAvalibleRooms($params = array())
     {
-        $date = date_create($params['date']);
-        $endDate = date('Y-m-d', strtotime($params['date']. ' + 1 days'));
+        $date = $params['date'];
 
-        var_dump($date);
+        $qb = $this->createQueryBuilder('room_repository')
+            ->select('room_repository', 'reservations')
+            ->leftJoin('room_repository.reservations', 'reservations')
+            ->where("reservations.startReservation <= :date")
+            ->andWhere(":date <= reservations.endReservation")
+                ->setParameter(':date', $date)
+            ->andWhere('room_repository.numberOfPeople = :numberOfPeople')
+                ->setParameter('numberOfPeople', $params['numberOfPeople'])
+        ;
+
+        return count($qb->getQuery()->getArrayResult());
+    }
+
+    public function countRooms($room)
+    {
+
+//        $qb = $entityManager->createQueryBuilder();
+//        $qb->select('count(account.id)');
+//        $qb->from('ZaysoCoreBundle:Account','account');
+//
+//        $count = $qb->getQuery()->getSingleScalarResult();
 
 
         $qb = $this->createQueryBuilder('room_repository')
-            ->select('room_repository', 'reservations', '(DATE_ADD(reservations.startReservation, 100, day)) as dupa')
-            ->leftJoin('room_repository.reservations', 'reservations')
-//            ->where('reservations.startReservation = :currentDate')
-//                ->setParameter(':currentDate', '2015-07-30')
-            ->where("reservations.startReservation > :date")
-                ->setParameter(':date', $date)
-//            ->where("(DATE_ADD('reservations.startReservation', '100', 'day')) < '2015-07-18'")
-//                ->setParameter(':date', $date)
-//                ->setParameter(':days', $params['days'])
-////            ->where('reservations.reservedDate >= :date')
-////                ->setParameter('date', $params['date'])
-////            ->andWhere('reservations.reservedDate <= :endReservation')
-////                ->setParameter(':endReservation', $endReservation)
-//            ->andWhere('room_repository.numberOfPeople = :numbersOfRooms')
-//                ->setParameter('numbersOfRooms', $params['numbersOfRooms'])
-//
+            ->select('count(room_repository.id)')
+            ->where('room_repository.numberOfPeople = :numberOfPeople')
+                ->setParameter('numberOfPeople', $room)
+
         ;
 
+        $qb = (int)$qb->getQuery()->getSingleScalarResult();
 
-
-
-        return $qb->getQuery()->getArrayResult();
+        return $qb;
     }
 }

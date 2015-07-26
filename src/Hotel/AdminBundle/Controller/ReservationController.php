@@ -47,9 +47,21 @@ class ReservationController extends Controller
     {
         $entity = new Reservation();
         $form = $this->createCreateForm($entity);
+
+
+//        var_dump($form->getData());
+
         $form->handleRequest($request);
 
+
+
+
+
+//        var_dump($request->query);
         if ($form->isValid()) {
+
+            $entity->setStartReservation(date_create($form['startReservation']->getData()));
+            $entity->setEndReservation(date_create($form['endReservation']->getData()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -141,6 +153,7 @@ class ReservationController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Reservation entity.');
         }
+
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);

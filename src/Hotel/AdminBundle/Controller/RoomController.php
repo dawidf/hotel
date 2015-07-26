@@ -2,6 +2,7 @@
 
 namespace Hotel\AdminBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -111,11 +112,12 @@ class RoomController extends Controller
     public function searchAction(Request $request)
     {
 
-        var_dump($request->query);
+
         $params = array();
         $params['date'] = $request->query->get('date');
-        $params['numbersOfRooms'] = $request->query->get('numbersOfRooms');
+        $params['numberOfPeople'] = $request->query->get('numberOfPeople');
         $params['days'] = $request->query->get('days');
+
 
 
 //        $em = $this->getDoctrine()->getManager();
@@ -137,22 +139,39 @@ class RoomController extends Controller
 //        $products = $query->getResult();
 
 
-//        $RoomsRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
-//        $qb = $RoomsRepo->getAvalibleRooms($params);
+        $RoomRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
+        $qb = $RoomRepo->getAvalibleRooms($params);
+
+        $countRooms = $RoomRepo->countRooms($params['numberOfPeople']);
+
+//
+//        var_dump($qb);
+//        var_dump($countRooms);
+        if( ($qb === $countRooms) )
+        {
+            return new JsonResponse(
+                array(
+                    'roomAvalible' => 'false'
+                )
+            );
+        }
+        else{
+            return new JsonResponse(
+                array(
+                    'roomAvalible' => 'true'
+                )
+            );
+        }
 
 
-
-
-
-
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('
-            SELECT room, res
-            FROM HotelAdminBundle:Room room
-            JOIN room.reservations res
-            WHERE res.startReservation > :date
-        ')->setParameter('date', '2015-07-25');
-        $qb = $query->getResult();
+//        $em = $this->getDoctrine()->getManager();
+//        $query = $em->createQuery('
+//            SELECT room, res
+//            FROM HotelAdminBundle:Room room
+//            JOIN room.reservations res
+//            WHERE res.startReservation > :date
+//        ')->setParameter('date', '2015-07-25');
+//        $qb = $query->getResult();
 
 
 

@@ -57,7 +57,7 @@ class Reservation
      * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\User", inversedBy="reservations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $client;
+    private $user;
 
     /**
      * Get id
@@ -187,10 +187,10 @@ class Reservation
     /**
      * Set client
      *
-     * @param \Hotel\AdminBundle\Entity\Client $client
+     * @param \Hotel\AdminBundle\Entity\User $client
      * @return Reservation
      */
-    public function setClient(\Hotel\AdminBundle\Entity\Client $client = null)
+    public function setClient(\Hotel\AdminBundle\Entity\User $client = null)
     {
         $this->client = $client;
 
@@ -200,7 +200,7 @@ class Reservation
     /**
      * Get client
      *
-     * @return \Hotel\AdminBundle\Entity\Client 
+     * @return \Hotel\AdminBundle\Entity\User
      */
     public function getClient()
     {
@@ -259,5 +259,28 @@ class Reservation
     public function getForDays()
     {
         return $this->forDays;
+    }
+
+    /**
+     * Set endReservation
+     *
+     * @param \DateTime $endReservation
+     * @return Reservation
+     */
+    public function setEndReservation($endReservation)
+    {
+        $this->endReservation = $endReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get endReservation
+     *
+     * @return \DateTime 
+     */
+    public function getEndReservation()
+    {
+        return $this->endReservation;
     }
 }

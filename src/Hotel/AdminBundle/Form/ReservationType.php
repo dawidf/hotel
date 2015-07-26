@@ -16,8 +16,8 @@ class ReservationType extends AbstractType
     {
         $builder
 
-            ->add('dateForReservation')
-            ->add('dateForEndOfReservation')
+            ->add('startReservation', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
+            ->add('endReservation', 'datetime', array('date_widget' => "single_text", 'time_widget' => "single_text"))
             ->add('services', 'choice', array(
                 'choices' => array(
                     'service'  => array('breakfast', 'lunch', 'dinner'),
@@ -26,7 +26,7 @@ class ReservationType extends AbstractType
                 'expanded' => false
             ))
             ->add('room', 'entity', array('class' => 'Hotel\AdminBundle\Entity\Room','label' => 'Room: ', 'property' => 'roomNumber'))
-            ->add('client', 'entity', array('class' => 'Hotel\AdminBundle\Entity\Client','label' => 'Client: ', 'property' => 'id'))
+            ->add('user', 'entity', array('class' => 'Hotel\AdminBundle\Entity\User','label' => 'Client: ', 'property' => 'email'))
         ;
     }
     

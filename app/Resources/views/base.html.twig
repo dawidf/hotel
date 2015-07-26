@@ -3,10 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        {% block stylesheets %}
+            {% stylesheets
+                'bundles/hoteladmin/css/bootstrap.min.css'
+                'bundles/hoteladmin/css/bootstrap-datepicker.min.css'
+                'bundles/hoteladmin/js/*'
+                filter="cssrewrite"
+                output='assets/css/compiled.css'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <!-- Latest compiled and minified CSS -->
+
+
     </head>
     <body>
     <div class="container">
@@ -18,6 +29,30 @@
         {% block body %}{% endblock %}
     </div>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
+            <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+            <script>
+                $( document ).ready(function() {
+                    $(function() {
+                        $( "#hotel_adminbundle_reservation_startReservation" ).datepicker({
+                            defaultDate: "+1w",
+                            dateFormat: 'yy-mm-dd',
+                            minDate: new Date(),
+                            onClose: function( selectedDate ) {
+                                $( "#hotel_adminbundle_reservation_endReservation" ).datepicker( "option", "minDate", selectedDate );
+                            }
+                        });
+                        $( "#hotel_adminbundle_reservation_endReservation" ).datepicker({
+                            defaultDate: "+1w",
+                            dateFormat: 'yy-mm-dd',
+                            onClose: function( selectedDate ) {
+                                $( "#hotel_adminbundle_reservation_startReservation" ).datepicker( "option", "maxDate", selectedDate );
+                            }
+                        });
+                    });
+                });
+            </script>
+        {% endblock %}
     </body>
 </html>

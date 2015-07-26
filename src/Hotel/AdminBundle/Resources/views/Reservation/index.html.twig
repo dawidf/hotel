@@ -3,13 +3,13 @@
 {% block body -%}
     <h1>Reservation list</h1>
 
-    <table class="records_list">
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Reserveddate</th>
-                <th>Dateforreservation</th>
-                <th>Dateforendofreservation</th>
+                <th>Start Reservation</th>
+                <th>End Reservation</th>
                 <th>Services</th>
                 <th>Actions</th>
             </tr>
@@ -18,9 +18,9 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('reservation_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.reservedDate %}{{ entity.reservedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.dateForReservation %}{{ entity.dateForReservation|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.dateForEndOfReservation %}{{ entity.dateForEndOfReservation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.reservedDate %}{{ entity.reservedDate|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if entity.startReservation %}{{ entity.startReservation|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if entity.endReservation %}{{ entity.startReservation|date('Y-m-d') }}{% endif %}</td>
                 <td>
                     {% for service in entity.services %}
                         <span>{{ service }}</span>
