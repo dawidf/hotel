@@ -23,17 +23,18 @@ class RoomController extends Controller
     /**
      * Lists all Room entities.
      *
-     * @Route("/", name="room")
+     * @Route("/list/{page}", name="room", defaults={"page"="1"})
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('HotelAdminBundle:Room')->findAll();
+        $rooms = $em->getRepository('HotelAdminBundle:Room')->findAll();
 
-        $date = new \DateTime();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($rooms, $page, 20);
 
 
         return array(

@@ -126,7 +126,7 @@ class News
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

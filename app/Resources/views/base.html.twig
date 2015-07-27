@@ -84,8 +84,13 @@
         {% block javascripts %}
             <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
             <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+            {#<script src="{{ asset('bundles/hoteladmin/js/ckeditor/ckeditor.js') }}"></script>#}
+            <script src="//cdn.ckeditor.com/4.5.1/standard/ckeditor.js"></script>
             <script>
                 $( document ).ready(function() {
+                    CKEDITOR.replace( 'hotel_adminbundle_news_description' );
+//                    CKEDITOR.replace( 'hotel_adminbundle_news[title]' );
+
                     $(function() {
                         $( "#hotel_adminbundle_reservation_startReservation" ).datepicker({
                             defaultDate: "+1w",

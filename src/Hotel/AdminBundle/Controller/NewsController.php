@@ -22,15 +22,18 @@ class NewsController extends Controller
     /**
      * Lists all News entities.
      *
-     * @Route("/", name="news")
+     * @Route("/list/{page}", name="news", defaults={"page"="1"})
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('HotelAdminBundle:News')->findAll();
+        $news = $em->getRepository('HotelAdminBundle:News')->getNewsWithAuthor();
+
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($news, $page, 10);
 
         return array(
             'entities' => $entities,
@@ -92,6 +95,11 @@ class NewsController extends Controller
     public function newAction()
     {
         $entity = new News();
+
+        if($entity->getAuthor() == null)
+        {
+            $entity->setAuthor($this->getUser());
+        }
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -162,7 +170,6 @@ class NewsController extends Controller
     private function createEditForm(News $entity)
     {
 
-        $entity->setAuthor($this->getUser());
         $form = $this->createForm(new NewsType(), $entity, array(
             'action' => $this->generateUrl('news_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -194,6 +201,8 @@ class NewsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+
+
 
         if ($editForm->isValid()) {
             $em->flush();

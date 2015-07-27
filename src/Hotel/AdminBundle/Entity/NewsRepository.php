@@ -12,5 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class NewsRepository extends EntityRepository
 {
+    public function getNewsWithAuthor()
+    {
+        $qb = $this->createQueryBuilder('newsRepository')
+            ->select('newsRepository', 'author')
+            ->leftJoin('newsRepository.author', 'author')
+            ->orderBy('newsRepository.modifiedDate', 'DESC')
+        ;
 
+        return $qb->getQuery()->getResult();
+    }
 }
