@@ -35,7 +35,7 @@ class RoomController extends Controller
 
         $date = new \DateTime();
 
-        var_dump($date);
+
         return array(
             'entities' => $entities,
         );

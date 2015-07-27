@@ -30,7 +30,7 @@ class RoomRepository extends EntityRepository
         return count($qb->getQuery()->getArrayResult());
     }
 
-    public function countRooms($room)
+    public function countRooms($numberOfPeople)
     {
 
 //        $qb = $entityManager->createQueryBuilder();
@@ -43,7 +43,7 @@ class RoomRepository extends EntityRepository
         $qb = $this->createQueryBuilder('room_repository')
             ->select('count(room_repository.id)')
             ->where('room_repository.numberOfPeople = :numberOfPeople')
-                ->setParameter('numberOfPeople', $room)
+                ->setParameter('numberOfPeople', $numberOfPeople)
 
         ;
 

@@ -63,14 +63,9 @@ class News
 
     /**
      * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\User", inversedBy="news")
-     * @ORM\JoinColumn(name="news_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
-
-
-
-
-
 
     /**
      * Get id

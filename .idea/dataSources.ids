@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - hotel@localhost" uuid="55548a73-ff7b-45b1-aa51-0ad3fedaa6d0">
+    <database-info product="MySQL" version="5.6.24-0ubuntu3" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="hotel"/>
+    <table name="category" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="120" scale="0" nullable="false" jdbcType="12"/>
+      <column name="slug" sqlType="VARCHAR" precision="120" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="UNIQ_64C19C15E237E06" unique="true" columns="name"/>
+      <index name="UNIQ_64C19C1989D9B62" unique="true" columns="slug"/>
+    </table>
+    <table name="ext_log_entries" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="action" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="logged_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="object_id" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="object_class" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="version" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="data" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1" remarks="KERDMlR5cGU6YXJyYXkp"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="log_class_lookup_idx" unique="false" columns="object_class"/>
+      <index name="log_date_lookup_idx" unique="false" columns="logged_at"/>
+      <index name="log_user_lookup_idx" unique="false" columns="username"/>
+      <index name="log_version_lookup_idx" unique="false" columns="object_id,object_class,version"/>
+    </table>
+    <table name="ext_translations" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="locale" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="object_class" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="field" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="foreign_key" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="content" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="lookup_unique_idx" unique="true" columns="locale,object_class,field,foreign_key"/>
+      <index name="translations_lookup_idx" unique="false" columns="locale,object_class,foreign_key"/>
+    </table>
+    <table name="floors" schema="" catalog="hotel" type="TABLE">
+      <column name="floor_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="floor_floor" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="floor_id"/>
+      <exported-key name="FK_7CA11A96854679E2" table="rooms" schema="" catalog="hotel" columns="floor_id"/>
+    </table>
+    <table name="fos_user" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="username_canonical" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email_canonical" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="salt" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="locked" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="expired" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="expires_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="confirmation_token" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password_requested_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="roles" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1" remarks="KERDMlR5cGU6YXJyYXkp"/>
+      <column name="credentials_expired" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="credentials_expire_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="surname" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="adress" sqlType="VARCHAR" precision="95" scale="0" nullable="false" jdbcType="12"/>
+      <column name="postal_code" sqlType="VARCHAR" precision="6" scale="0" nullable="false" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" precision="35" scale="0" nullable="false" jdbcType="12"/>
+      <column name="phone_number" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_1DD39950B5A459A0" table="news" schema="" catalog="hotel" columns="news_id"/>
+      <exported-key name="FK_4DA239A76ED395" table="reservations" schema="" catalog="hotel" columns="user_id"/>
+      <index name="UNIQ_957A647992FC23A8" unique="true" columns="username_canonical"/>
+      <index name="UNIQ_957A6479A0D96FBF" unique="true" columns="email_canonical"/>
+    </table>
+    <table name="news" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="news_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="title" sqlType="VARCHAR" precision="120" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="slug" sqlType="VARCHAR" precision="120" scale="0" nullable="false" jdbcType="12"/>
+      <column name="create_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modified_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_1DD39950B5A459A0" columns="news_id" ref-table="fos_user" ref-schema="" ref-catalog="hotel" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="UNIQ_1DD399502B36786B" unique="true" columns="title"/>
+      <index name="UNIQ_1DD39950989D9B62" unique="true" columns="slug"/>
+      <index name="IDX_1DD39950B5A459A0" unique="false" columns="news_id"/>
+    </table>
+    <table name="reservations" schema="" catalog="hotel" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="room_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="reserved_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="start_reservation" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="end_reservation" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="services" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1" remarks="KERDMlR5cGU6YXJyYXkp"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_4DA23954177093" columns="room_id" ref-table="rooms" ref-schema="" ref-catalog="hotel" ref-columns="room_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_4DA239A76ED395" columns="user_id" ref-table="fos_user" ref-schema="" ref-catalog="hotel" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="IDX_4DA23954177093" unique="false" columns="room_id"/>
+      <index name="IDX_4DA239A76ED395" unique="false" columns="user_id"/>
+    </table>
+    <table name="rooms" schema="" catalog="hotel" type="TABLE">
+      <column name="room_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="floor_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="number_of_people" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="for_smoking_people" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="room_number" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="room_id"/>
+      <foreign-key name="FK_7CA11A96854679E2" columns="floor_id" ref-table="floors" ref-schema="" ref-catalog="hotel" ref-columns="floor_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_4DA23954177093" table="reservations" schema="" catalog="hotel" columns="room_id"/>
+      <index name="IDX_7CA11A96854679E2" unique="false" columns="floor_id"/>
+    </table>
+  </data-source>
+</component>

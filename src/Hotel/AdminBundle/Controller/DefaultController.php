@@ -6,6 +6,7 @@ use Hotel\AdminBundle\Form\FileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+//        $asd = new UploadedFile();
+//        $asd->getFilename();
+
         $savePath = $this->get('kernel')->getRootDir().'/../web/uploads/';
 
         $form = $this->createForm(new FileType());
@@ -30,8 +34,12 @@ class DefaultController extends Controller
 
             foreach($request->files as $file)
             {
+                var_dump($file->getMimeType());
+                var_dump($file->getClientOriginalName());
+                var_dump($file->getFilename());
+
                 $file->move($savePath);
-                echo 'ok';
+//                return new JsonResponse(['uploaded' => 'ok']);
             }
 //            foreach($files as $file)
 //            {

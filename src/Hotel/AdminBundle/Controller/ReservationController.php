@@ -21,16 +21,23 @@ class ReservationController extends Controller
     /**
      * Lists all Reservation entities.
      *
-     * @Route("/", name="reservation")
+     * @Route("/list/{status}/{page}", name="reservation", defaults={"status"="current", "page"="1"})
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($status, $page)
     {
+        $limit = 10;
 
+        $params = array(
+            'status' => $status
+        );
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('HotelAdminBundle:Reservation')->findAll();
+        $entitiess = $em->getRepository('HotelAdminBundle:Reservation')->reservationWithClients($params);
+
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entitiess, $page, $limit);
 
         return array(
             'entities' => $entities,

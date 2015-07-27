@@ -2,6 +2,7 @@
 
 namespace Hotel\AdminBundle\Controller;
 
+use Hotel\AdminBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -160,6 +161,8 @@ class NewsController extends Controller
     */
     private function createEditForm(News $entity)
     {
+
+        $entity->setAuthor($this->getUser());
         $form = $this->createForm(new NewsType(), $entity, array(
             'action' => $this->generateUrl('news_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -181,6 +184,8 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('HotelAdminBundle:News')->find($id);
+
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find News entity.');

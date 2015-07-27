@@ -1,6 +1,20 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <ul>
+        <li>
+            <a href="{{ path('reservation_new') }}">Create a new entry</a>
+        </li>
+        <li>
+            <a href="{{ path('reservation', { 'status': 'archive' }) }}">Archive</a>
+        </li>
+        <li>
+            <a href="{{ path('reservation', { 'status': 'all' }) }}">All</a>
+        </li>
+        <li>
+            <a href="{{ path('reservation', { 'status': 'current' }) }}">Current</a>
+        </li>
+    </ul>
     <h1>Reservation list</h1>
 
     <table class="table">
@@ -11,6 +25,8 @@
                 <th>Start Reservation</th>
                 <th>End Reservation</th>
                 <th>Services</th>
+                <th>Client Details</th>
+                <th>Room Details</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,6 +42,21 @@
                         <span>{{ service }}</span>
                     {% endfor %}
                 </td>
+                <th>
+                    <ul>
+                        <li><span>Name: </span>{{ entity.user.name }}</li>
+                        <li><span>Surname: </span>{{ entity.user.surname }}</li>
+                        <li><span>Email: </span>{{ entity.user.email }}</li>
+                        <li><span>Adress: </span>{{ entity.user.adress }}</li>
+                    </ul>
+                </th>
+                <th>
+                    <ul>
+                        <li><span>Number Of People: </span>{{ entity.room.numberOfPeople }}</li>
+                        <li><span>Room Number: </span>{{ entity.room.roomNumber }}</li>
+                    </ul>
+                </th>
+
                 <td>
                 <ul>
                     <li>
@@ -40,12 +71,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(entities) }}
+    </div>
 
-        <ul>
-        <li>
-            <a href="{{ path('reservation_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+
     {% endblock %}

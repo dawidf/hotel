@@ -3,6 +3,7 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * ReservationRepository
@@ -12,4 +13,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReservationRepository extends EntityRepository
 {
+    public function reservationWithClients($params = array())
+    {
+
+        $qb = $this->createQueryBuilder('reservation_repository')
+            ->select('reservation_repository', 'user', 'room')
+            ->leftJoin('reservation_repository.user', 'user')
+            ->leftJoin('reservation_repository.room', 'room')
+            ->orderBy('reservation_repository.startReservation')
+
+        ;
+        if($params['status'] == 'current')
+        {
+            $qb->where('reservation_repository.endReservation > :currentDate')
+            ->setParameter('currentDate', new \DateTime());
+        }
+        if($params['status'] == 'archive')
+        {
+            $qb->where('reservation_repository.endReservation < :currentDate')
+                ->setParameter('currentDate', new \DateTime());
+        }
+
+//        $qb = $this->createQueryBuilder('room_repository')
+//            ->select('room_repository', 'reservations')
+//            ->leftJoin('room_repository.reservations', 'reservations')
+//            ->where("reservations.startReservation <= :date")
+//            ->andWhere(":date <= reservations.endReservation")
+//            ->setParameter(':date', $date)
+//            ->andWhere('room_repository.numberOfPeople = :numberOfPeople')
+//            ->setParameter('numberOfPeople', $params['numberOfPeople'])
+//        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
