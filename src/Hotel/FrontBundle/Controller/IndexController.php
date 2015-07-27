@@ -2,9 +2,13 @@
 
 namespace Hotel\FrontBundle\Controller;
 
+use Hotel\AdminBundle\Entity\Reservation;
+use Hotel\AdminBundle\Form\ReservationType;
+use Hotel\FrontBundle\Form\MakeReservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
@@ -19,6 +23,21 @@ class IndexController extends Controller
 
         return array(
             'rooms' => $allRooms
+        );
+    }
+
+    /**
+     * @Route("/make-reservation", name="make_reservation")
+     * @Template()
+     */
+    public function makeReservationAction(Request $request)
+    {
+
+
+        $form = $this->createForm(new MakeReservationType());
+
+        return array(
+            'form' => $form->createView()
         );
     }
 }

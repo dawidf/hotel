@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets
+        'bundles/hoteladmin/css/bootstrap.min.css'
+        'bundles/hoteladmin/css/bootstrap-datepicker.min.css'
+        'bundles/hoteladmin/js/*'
+        filter="cssrewrite"
+        output='assets/css/compiled.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <!-- Latest compiled and minified CSS -->
+
+
+</head>
+<body>
+
+<div class="container">
+    {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+
+        {{ flashMessage }}
+
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+
+    <script>
+        $( document ).ready(function() {
+
+
+            $(function() {
+                var startReservation = $( "#hotel_front_bundle_make_reservation_startReservation" );
+                var endReservation = $( "#hotel_front_bundle_make_reservation_endReservation" );
+                var peopleOfRoom = $('#hotel_front_bundle_make_reservation_peopleOfRoom');
+
+
+                startReservation.datepicker({
+                    defaultDate: "+1w",
+                    dateFormat: 'yy-mm-dd',
+                    minDate: new Date(),
+                    onClose: function( selectedDate ) {
+                        endReservation.datepicker( "option", "minDate", selectedDate );
+                    }
+                });
+
+                startReservation.change(function () {
+                    $.ajax({
+                        url: '/app_dev.php/check_is_avalible_rooms',
+                        type: 'GET',
+                        data: {
+                            'startReservation': startReservation.val(),
+                            'PeopleOfRoom': peopleOfRoom.val()
+                        }
+                    })
+                            .done(function() {
+                                console.log("success");
+                            })
+                            .fail(function(msg) {
+                                console.log(msg);
+                            })
+                            .always(function() {
+                                console.log("complete");
+                            });
+                });
+
+                endReservation.datepicker({
+                    defaultDate: "+1w",
+                    dateFormat: 'yy-mm-dd',
+                    onClose: function( selectedDate ) {
+                        startReservation.datepicker( "option", "maxDate", selectedDate );
+                    }
+                });
+            });
+
+
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

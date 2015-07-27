@@ -27,6 +27,7 @@ class ReservationType extends AbstractType
             ))
             ->add('room', 'entity', array('class' => 'Hotel\AdminBundle\Entity\Room','label' => 'Room: ', 'property' => 'roomNumber'))
             ->add('user', 'entity', array('class' => 'Hotel\AdminBundle\Entity\User','label' => 'Client: ', 'property' => 'email'))
+            ->add('submit', 'submit')
         ;
     }
     

@@ -1,7 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends '@HotelFront/base.html.twig' %}
 {% block body %}
     <form class="right-side" action="{{ path('check_is_avalible_rooms') }}">
-        <input type="text" name="date" value="{{ searchedRoom is defined ? searchedRoom : '' }}" placeholder="Wyszukaj">
+        <input id="startReservation" type="text" name="startReservation" placeholder="Start Date">
+        <input id="endReservation" type="text" name="endReservation" placeholder="End Date">
         <select name="numberOfPeople">
             <option value="1">1</option>
             <option value="2">2</option>
