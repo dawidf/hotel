@@ -25,16 +25,18 @@ class News
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @ORM\Column(type="string", length=120, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $title;
+
     /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=120, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="text")
@@ -64,6 +66,8 @@ class News
      * @ORM\JoinColumn(name="news_id", referencedColumnName="id")
      */
     private $author;
+
+
 
 
 
@@ -102,19 +106,6 @@ class News
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return News
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
      * Get slug
      *
      * @return string 
@@ -147,18 +138,6 @@ class News
         return $this->description;
     }
 
-    /**
-     * Set createDate
-     *
-     * @param \DateTime $createDate
-     * @return News
-     */
-    public function setCreateDate($createDate)
-    {
-        $this->createDate = $createDate;
-
-        return $this;
-    }
 
     /**
      * Get createDate
@@ -170,18 +149,6 @@ class News
         return $this->createDate;
     }
 
-    /**
-     * Set modifiedDate
-     *
-     * @param \DateTime $modifiedDate
-     * @return News
-     */
-    public function setModifiedDate($modifiedDate)
-    {
-        $this->modifiedDate = $modifiedDate;
-
-        return $this;
-    }
 
     /**
      * Get modifiedDate
