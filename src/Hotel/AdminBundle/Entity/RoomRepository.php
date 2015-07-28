@@ -13,9 +13,9 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class RoomRepository extends EntityRepository
 {
-    public function getAvalibleRooms($params = array())
+    public function getAvalibleRooms($params = array(), $getQuery = false)
     {
-        $date = $params['date'];
+        $date = $params['startDate'];
 
         $qb = $this->createQueryBuilder('room_repository')
             ->select('room_repository', 'reservations')
@@ -23,32 +23,62 @@ class RoomRepository extends EntityRepository
             ->where("reservations.startReservation <= :date")
             ->andWhere(":date <= reservations.endReservation")
                 ->setParameter(':date', $date)
-            ->andWhere('room_repository.numberOfPeople = :numberOfPeople')
-                ->setParameter('numberOfPeople', $params['numberOfPeople'])
+            ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
+                ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
         ;
 
-        return count($qb->getQuery()->getArrayResult());
+        if($getQuery === false)
+        {
+            return count($qb->getQuery()->getArrayResult());
+        }
+        else
+        {
+            $qb->getQuery()->getArrayResult();
+        }
     }
 
     public function countRooms($numberOfPeople)
     {
 
-//        $qb = $entityManager->createQueryBuilder();
-//        $qb->select('count(account.id)');
-//        $qb->from('ZaysoCoreBundle:Account','account');
-//
-//        $count = $qb->getQuery()->getSingleScalarResult();
-
-
         $qb = $this->createQueryBuilder('room_repository')
             ->select('count(room_repository.id)')
-            ->where('room_repository.numberOfPeople = :numberOfPeople')
-                ->setParameter('numberOfPeople', $numberOfPeople)
+            ->where('room_repository.numberOfPeople = :peopleOfRoom')
+                ->setParameter('peopleOfRoom', $numberOfPeople)
 
         ;
 
         $qb = (int)$qb->getQuery()->getSingleScalarResult();
 
         return $qb;
+    }
+
+    public function getNextAvailableDate($params = array())
+    {
+
+        $startDate = ($params['startDate']);
+        $endDate = ($params['endDate']);
+
+        $qb = $this->createQueryBuilder('room_repository')
+            ->select('room_repository', 'reservations')
+            ->leftJoin('room_repository.reservations', 'reservations')
+            ->where("reservations.startReservation >= :startDate")
+                ->setParameter(':startDate', $startDate)
+            ->andWhere(":endDate <= reservations.endReservation")
+                ->setParameter(':endDate', $endDate)
+            ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
+                ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
+            ->orderBy('reservations.startReservation')
+        ;
+
+
+        $nextAvalibleDate = $qb->getQuery()->getFirstResult();
+        $howManyNotAvalibleRooms = count($qb->getQuery()->getArrayResult());
+
+        $allRooms = $this->countRooms($params['peopleOfRoom']);
+
+
+        return $nextAvalibleDate;
+
+
     }
 }

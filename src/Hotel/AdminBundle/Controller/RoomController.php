@@ -115,41 +115,26 @@ class RoomController extends Controller
 
 
         $params = array();
-        $params['date'] = $request->query->get('date');
-        $params['numberOfPeople'] = $request->query->get('numberOfPeople');
-        $params['days'] = $request->query->get('days');
-
-
-
-//        $em = $this->getDoctrine()->getManager();
-//        $query = $em->createQuery('
-//            select r, (start_reservation + interval r.for_days day) as end_reservation
-//            from HotelAdminBundle:Room where start_reservation > "2015-07-05"
-//            GROUP BY id HAVING end_reservation > "2015-07-06"
-//        ')
-//
-//        ;
-//        $query = $em->createQuery('
-//            select r.id, r.start_reservation + interval r.for_days days as end_reservation
-//            from HotelAdminBundle:Room r
-//        ');
-
-
-
-
-//        $products = $query->getResult();
+        $params['startDate'] = $request->query->get('startDate');
+        $params['peopleOfRoom'] = $request->query->get('peopleOfRoom');
+        $params['endDate'] = $request->query->get('endDate');
 
 
         $RoomRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
         $qb = $RoomRepo->getAvalibleRooms($params);
 
-        $countRooms = $RoomRepo->countRooms($params['numberOfPeople']);
+        $countRooms = $RoomRepo->countRooms($params['peopleOfRoom']);
 
+//        $nextAvailableRoom = $RoomRepo->getNextAvailableDate($params);
 //
-//        var_dump($qb);
-//        var_dump($countRooms);
+//        var_dump($nextAvailableRoom);
+
         if( ($qb === $countRooms) )
         {
+//            if($nextAvailableRoom !== false)
+//            {
+//
+//            }
             return new JsonResponse(
                 array(
                     'roomAvalible' => 'false'
@@ -163,22 +148,6 @@ class RoomController extends Controller
                 )
             );
         }
-
-
-//        $em = $this->getDoctrine()->getManager();
-//        $query = $em->createQuery('
-//            SELECT room, res
-//            FROM HotelAdminBundle:Room room
-//            JOIN room.reservations res
-//            WHERE res.startReservation > :date
-//        ')->setParameter('date', '2015-07-25');
-//        $qb = $query->getResult();
-
-
-
-        return array(
-            'avalibleRooms' => $qb
-        );
 
 
     }

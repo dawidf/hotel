@@ -23,7 +23,7 @@ class ReservationType extends AbstractType
                     'service'  => array('breakfast', 'lunch', 'dinner'),
                 ),
                 'multiple' => true,
-                'expanded' => false
+                'expanded' => true
             ))
             ->add('room', 'entity', array('class' => 'Hotel\AdminBundle\Entity\Room','label' => 'Room: ', 'property' => 'roomNumber'))
             ->add('user', 'entity', array('class' => 'Hotel\AdminBundle\Entity\User','label' => 'Client: ', 'property' => 'email'))

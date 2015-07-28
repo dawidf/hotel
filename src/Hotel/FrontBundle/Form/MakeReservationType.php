@@ -19,10 +19,13 @@ class MakeReservationType extends AbstractType
                     'service'  => array('breakfast', 'lunch', 'dinner'),
                 ),
                 'multiple' => true,
-                'expanded' => false
+                'expanded' => true
             ))
-            ->add('peopleOfRoom', 'number', array(
 
+            ->add('peopleOfRoom', 'choice', array(
+                'choices' => array('1' => '1', '2' => '2', '3' => '3'),
+                'multiple' => false,
+                'expanded' => false
             ))
             ->add('submit', 'submit')
         ;
@@ -30,7 +33,9 @@ class MakeReservationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setDefaults(array(
+            'data_class' => 'Hotel\AdminBundle\Entity\Reservation'
+        ));
     }
 
     public function getName()

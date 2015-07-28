@@ -33,8 +33,26 @@ class IndexController extends Controller
     public function makeReservationAction(Request $request)
     {
 
+        $Reervation = new Reservation();
 
         $form = $this->createForm(new MakeReservationType());
+
+        if($request->isMethod('POST'))
+        {
+            $Reervation->setClient($this->getUser());
+
+
+
+            $form->handleRequest($request);
+            if($form->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($Reervation);
+
+                $em->flush();
+            }
+        }
+
 
         return array(
             'form' => $form->createView()

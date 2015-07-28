@@ -60,15 +60,11 @@ class ReservationController extends Controller
 
         $form->handleRequest($request);
 
-
-
-
-
 //        var_dump($request->query);
         if ($form->isValid()) {
 
-            $entity->setStartReservation(date_create($form['startReservation']->getData()));
-            $entity->setEndReservation(date_create($form['endReservation']->getData()));
+            $entity->setStartReservation($form['startReservation']->getData());
+            $entity->setEndReservation($form['endReservation']->getData());
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

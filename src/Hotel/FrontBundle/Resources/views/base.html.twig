@@ -39,9 +39,67 @@
 
 
             $(function() {
+                var submit = $('#hotel_front_bundle_make_reservation_submit');
                 var startReservation = $( "#hotel_front_bundle_make_reservation_startReservation" );
                 var endReservation = $( "#hotel_front_bundle_make_reservation_endReservation" );
                 var peopleOfRoom = $('#hotel_front_bundle_make_reservation_peopleOfRoom');
+
+                submit.attr('disabled', 'disabled');
+
+                var isAvalibleRoom = function () {
+                    $.ajax({
+                        url: '/app_dev.php/room/check_is_avalible_rooms',
+                        type: 'GET',
+                        data: {
+                            'startDate': startReservation.val(),
+                            'endDate': endReservation.val(),
+                            'peopleOfRoom': peopleOfRoom.val()
+                        }
+
+                    })
+                    .done(function(data) {
+
+                        console.log(data);
+                                if(data.roomAvalible === 'true')
+                                {
+                                    submit.removeAttr('disabled');
+                                    $('.not-avalible-rooms').remove();
+                                }
+                                else
+                                {
+                                    if ($('.not-avalible-rooms').length == 0)
+                                    {
+                                        $('body').append('<div id="not-avalible-rooms" class="alert alert-danger not-avalible-rooms" role="alert">Brak wolnych miejsc, zmień date albo ileść ludzi w pokoju</div>');
+                                    }
+
+                                    submit.attr('disabled', 'disabled');
+                                }
+                    })
+                    .fail(function() {
+                            submit.attr('disabled', 'disabled');
+                    })
+//                    .always(function() {
+//                        console.log("complete");
+//                    });
+                    ;
+                };
+
+                var validateInputs = function () {
+                    if((startReservation.val().length) !== 0 && (endReservation.val().length) !== 0 && (peopleOfRoom.val().length) !== 0)
+                    {
+                        isAvalibleRoom();
+                    }
+                };
+
+                startReservation.change(function () {
+                    validateInputs();
+                });
+                endReservation.change(function () {
+                    validateInputs();
+                });
+                peopleOfRoom.change(function () {
+                    validateInputs();
+                });
 
 
                 startReservation.datepicker({
@@ -51,26 +109,6 @@
                     onClose: function( selectedDate ) {
                         endReservation.datepicker( "option", "minDate", selectedDate );
                     }
-                });
-
-                startReservation.change(function () {
-                    $.ajax({
-                        url: '/app_dev.php/check_is_avalible_rooms',
-                        type: 'GET',
-                        data: {
-                            'startReservation': startReservation.val(),
-                            'PeopleOfRoom': peopleOfRoom.val()
-                        }
-                    })
-                            .done(function() {
-                                console.log("success");
-                            })
-                            .fail(function(msg) {
-                                console.log(msg);
-                            })
-                            .always(function() {
-                                console.log("complete");
-                            });
                 });
 
                 endReservation.datepicker({
