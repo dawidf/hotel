@@ -15,7 +15,8 @@ class RoomRepository extends EntityRepository
 {
     public function getAvalibleRooms($params = array(), $getQuery = false)
     {
-        $date = $params['startDate'];
+        $startDate = $params['startDate'];
+        $endDate = $params['endDate'];
 
         $qb = $this->createQueryBuilder('room_repository')
             ->select('room_repository', 'reservations')
@@ -26,6 +27,11 @@ class RoomRepository extends EntityRepository
             ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
                 ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
         ;
+
+        ->where('(tor_events.dataStart <= :startDate and tor_events.dateStop > :startDate)
+ or
+(tor_events.dataStart < :endDate and tor_events.dateStop >= :endDate)
+or (tor_events.dataStart > :startDate and tor_events.dateStop < :endDate)')
 
         if($getQuery === false)
         {

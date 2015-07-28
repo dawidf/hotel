@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e996609-68f3-41a9-a5a3-d7564cf43a65" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/FrontBundle/Controller/IndexController.php" afterPath="$PROJECT_DIR$/src/Hotel/FrontBundle/Controller/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/FrontBundle/Form/MakeReservationType.php" afterPath="$PROJECT_DIR$/src/Hotel/FrontBundle/Form/MakeReservationType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/ReservationController.php" afterPath="$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/ReservationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/AdminBundle/Form/ReservationType.php" afterPath="$PROJECT_DIR$/src/Hotel/AdminBundle/Form/ReservationType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/RoomController.php" afterPath="$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/RoomController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/RoomRepository.php" afterPath="$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/RoomRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hotel/FrontBundle/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/src/Hotel/FrontBundle/Resources/views/base.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Hotel.iws" />
@@ -162,16 +157,27 @@
       <file leaf-file-name="RoomController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/RoomController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.87931">
-              <caret line="131" column="35" selection-start-line="131" selection-start-column="35" selection-end-line="131" selection-end-column="35" />
+            <state vertical-scroll-proportion="-5.793103">
+              <caret line="128" column="33" selection-start-line="128" selection-start-column="33" selection-end-line="128" selection-end-column="33" />
               <folding>
                 <element signature="e#848#871#1#PHP" expanded="true" />
                 <element signature="e#3149#3172#1#PHP" expanded="true" />
-                <element signature="e#4140#4163#1#PHP" expanded="true" />
-                <element signature="e#4777#4800#1#PHP" expanded="true" />
-                <element signature="e#6072#6095#1#PHP" expanded="true" />
-                <element signature="e#7122#7145#1#PHP" expanded="true" />
+                <element signature="e#3488#3511#0#PHP" expanded="true" />
+                <element signature="e#4627#4650#1#PHP" expanded="true" />
+                <element signature="e#5264#5287#1#PHP" expanded="true" />
+                <element signature="e#6559#6582#1#PHP" expanded="true" />
+                <element signature="e#7609#7632#1#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Room.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/Room.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.7">
+              <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -188,21 +194,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReservationRepository.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/ReservationRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RoomRepository.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/RoomRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.697479">
-              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.19327731">
+              <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -887,16 +883,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.566668">
-          <caret line="38" column="47" selection-start-line="38" selection-start-column="47" selection-end-line="38" selection-end-column="47" />
-          <folding>
-            <element signature="e#48#84#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/55548a73-ff7b-45b1-aa51-0ad3fedaa6d0/console.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -915,6 +901,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -929,6 +916,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.9663866">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1267,18 +1255,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/RoomController.php">
+    <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/Room.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.87931">
-          <caret line="131" column="35" selection-start-line="131" selection-start-column="35" selection-end-line="131" selection-end-column="35" />
-          <folding>
-            <element signature="e#848#871#1#PHP" expanded="true" />
-            <element signature="e#3149#3172#1#PHP" expanded="true" />
-            <element signature="e#4140#4163#1#PHP" expanded="true" />
-            <element signature="e#4777#4800#1#PHP" expanded="true" />
-            <element signature="e#6072#6095#1#PHP" expanded="true" />
-            <element signature="e#7122#7145#1#PHP" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-7.7">
+          <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1292,10 +1273,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Controller/RoomController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.793103">
+          <caret line="128" column="33" selection-start-line="128" selection-start-column="33" selection-end-line="128" selection-end-column="33" />
+          <folding>
+            <element signature="e#848#871#1#PHP" expanded="true" />
+            <element signature="e#3149#3172#1#PHP" expanded="true" />
+            <element signature="e#3488#3511#0#PHP" expanded="true" />
+            <element signature="e#4627#4650#1#PHP" expanded="true" />
+            <element signature="e#5264#5287#1#PHP" expanded="true" />
+            <element signature="e#6559#6582#1#PHP" expanded="true" />
+            <element signature="e#7609#7632#1#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Hotel/AdminBundle/Entity/RoomRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.697479">
-          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.19327731">
+          <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
           <folding />
         </state>
       </provider>

@@ -125,6 +125,22 @@ class RoomController extends Controller
 
         $countRooms = $RoomRepo->countRooms($params['peopleOfRoom']);
 
+        $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
+        $a = array('001', '000');
+        $query
+            ->select('room.roomNumber')
+            ->from('HotelAdminBundle:Room', 'room')
+            ->leftjoin('room.reservations', 'reservations')
+            ->andWhere($query->expr()->notIn('room.roomNumber', $a))
+            ;
+        $results = $query->getQuery()->getArrayResult();
+
+
+
+        $asd = $RoomRepo->getAvalibleRooms($params, true);
+
+
+
 //        $nextAvailableRoom = $RoomRepo->getNextAvailableDate($params);
 //
 //        var_dump($nextAvailableRoom);
