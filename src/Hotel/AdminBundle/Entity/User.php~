@@ -259,4 +259,37 @@ class User extends BaseUser
     {
         return $this->reservations;
     }
+
+    /**
+     * Add news
+     *
+     * @param \Hotel\AdminBundle\Entity\News $news
+     * @return User
+     */
+    public function addNews(\Hotel\AdminBundle\Entity\News $news)
+    {
+        $this->news[] = $news;
+
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param \Hotel\AdminBundle\Entity\News $news
+     */
+    public function removeNews(\Hotel\AdminBundle\Entity\News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
 }

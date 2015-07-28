@@ -2,10 +2,12 @@
 
 namespace Hotel\AdminBundle\Controller;
 
+use abeautifulsite\SimpleImage;
 use Hotel\AdminBundle\Form\FileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +21,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 //        $asd = new UploadedFile();
-//        $asd->getFilename();
+//        $asd->getClientOriginalExtension();
+//        $asd->guessExtension();
+//        $asd->getClientOriginalName();
+
+//
+
 
         $savePath = $this->get('kernel')->getRootDir().'/../web/uploads/';
 
@@ -34,22 +41,42 @@ class DefaultController extends Controller
 
             foreach($request->files as $file)
             {
-                var_dump($file->getMimeType());
-                var_dump($file->getClientOriginalName());
-                var_dump($file->getFilename());
 
-                $file->move($savePath);
-//                return new JsonResponse(['uploaded' => 'ok']);
+                $orgName = $file->getClientOriginalName();
+
+                $asd = rand(1,9999);
+                $newName = $asd.$orgName;
+
+
+                $fullPath = $savePath.$newName;
+                $file->move($savePath, $newName);
+
+                $image = new SimpleImage($fullPath);
+                $image->thumbnail(100);
+
+                $image->save($savePath.'mini/'.$newName);
+
+                $image = new SimpleImage($fullPath);
+                $image->thumbnail(600);
+                $image->save($savePath.'medium/'.$newName);
+
+                return new JsonResponse(['uploaded' => 'ok']);
             }
-//            foreach($files as $file)
-//            {
-//                $file->move($savePath);
-//                echo 'success';
-//            }
+
         }
 
         return array(
             'form' => $form->createView()
         );
+    }
+
+    private function setNameIfExist($fileFullPath, $count)
+    {
+
+        if(file_exists($fileFullPath))
+        {
+            $this->setNameIfExist();
+        }
+
     }
 }

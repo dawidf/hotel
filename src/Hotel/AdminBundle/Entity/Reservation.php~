@@ -32,13 +32,13 @@ class Reservation
     /**
      * @ExtraAssert\MinDate(limit="today")
      * @Assert\NotBlank()
-     * @ORM\Column(name="start_reservation", type="date")
+     * @ORM\Column(name="start_reservation", type="datetime")
      */
     protected $startReservation;
     /**
      * @ExtraAssert\MinDate(limit="today")
      * @Assert\NotBlank()
-     * @ORM\Column(name="end_reservation", type="date")
+     * @ORM\Column(name="end_reservation", type="datetime")
      */
     protected $endReservation;
     /**

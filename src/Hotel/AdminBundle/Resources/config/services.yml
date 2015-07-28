@@ -7,3 +7,8 @@ services:
         class: Hotel\AdminBundle\Form\RegistrationFormType
         tags:
             - { name: form.type, alias: hotel_admin_bundle_registration_form_type }
+    app.twig_extension:
+            class: Hotel\AdminBundle\Twig\Extension\EstensionTwig
+            public: false
+            tags:
+                - { name: twig.extension }

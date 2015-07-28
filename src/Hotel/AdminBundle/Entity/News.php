@@ -44,6 +44,16 @@ class News
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $thumbnail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Slider", mappedBy="news")
+     */
+    private $slider;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="create_date")
      */
@@ -54,6 +64,8 @@ class News
      * @ORM\Column(type="datetime", name="modified_date")
      */
     private $modifiedDate;
+
+
 
 //    /**
 //     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Category", inversedBy="news")
@@ -176,5 +188,107 @@ class News
     public function getAuthor()
     {
         return $this->author;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->slider = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return News
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Set thumbnail
+     *
+     * @param string $thumbnail
+     * @return News
+     */
+    public function setThumbnail($thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    /**
+     * Get thumbnail
+     *
+     * @return string 
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return News
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Set modifiedDate
+     *
+     * @param \DateTime $modifiedDate
+     * @return News
+     */
+    public function setModifiedDate($modifiedDate)
+    {
+        $this->modifiedDate = $modifiedDate;
+
+        return $this;
+    }
+
+    /**
+     * Add slider
+     *
+     * @param \Hotel\AdminBundle\Entity\Slider $slider
+     * @return News
+     */
+    public function addSlider(\Hotel\AdminBundle\Entity\Slider $slider)
+    {
+        $this->slider[] = $slider;
+
+        return $this;
+    }
+
+    /**
+     * Remove slider
+     *
+     * @param \Hotel\AdminBundle\Entity\Slider $slider
+     */
+    public function removeSlider(\Hotel\AdminBundle\Entity\Slider $slider)
+    {
+        $this->slider->removeElement($slider);
+    }
+
+    /**
+     * Get slider
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSlider()
+    {
+        return $this->slider;
     }
 }

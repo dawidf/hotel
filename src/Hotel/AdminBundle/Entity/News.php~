@@ -25,11 +25,7 @@ class News
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @ORM\Column(type="string", length=120, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $title;
+
     /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=120, unique=true)
@@ -37,9 +33,25 @@ class News
     private $slug;
 
     /**
+     * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $title;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $thumbnail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hotel\AdminBundle\Entity\Slider", mappedBy="news")
+     */
+    private $slider;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -53,6 +65,8 @@ class News
      */
     private $modifiedDate;
 
+
+
 //    /**
 //     * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\Category", inversedBy="news")
 //     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
@@ -61,12 +75,9 @@ class News
 
     /**
      * @ORM\ManyToOne(targetEntity="Hotel\AdminBundle\Entity\User", inversedBy="news")
-     * @ORM\JoinColumn(name="news_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
-
-
-
 
     /**
      * Get id
@@ -76,5 +87,106 @@ class News
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return News
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return News
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+
+    /**
+     * Get modifiedDate
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedDate()
+    {
+        return $this->modifiedDate;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Hotel\AdminBundle\Entity\User $author
+     * @return News
+     */
+    public function setAuthor(\Hotel\AdminBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Hotel\AdminBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

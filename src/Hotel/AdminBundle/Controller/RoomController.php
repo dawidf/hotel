@@ -123,6 +123,9 @@ class RoomController extends Controller
         $RoomRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
         $qb = $RoomRepo->getAvalibleRooms($params);
 
+
+
+
         $countRooms = $RoomRepo->countRooms($params['peopleOfRoom']);
 
         $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
@@ -137,7 +140,7 @@ class RoomController extends Controller
 
 
 
-        $asd = $RoomRepo->getAvalibleRooms($params, true);
+
 
 
 

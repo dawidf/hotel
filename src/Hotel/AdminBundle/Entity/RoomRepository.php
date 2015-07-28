@@ -18,29 +18,46 @@ class RoomRepository extends EntityRepository
         $startDate = $params['startDate'];
         $endDate = $params['endDate'];
 
-        $qb = $this->createQueryBuilder('room_repository')
-            ->select('room_repository', 'reservations')
-            ->leftJoin('room_repository.reservations', 'reservations')
-            ->where("reservations.startReservation <= :date")
-            ->andWhere(":date <= reservations.endReservation")
-                ->setParameter(':date', $date)
-            ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
-                ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
-        ;
+        // nie kasowac
+//        $qb = $this->createQueryBuilder('room_repository')
+//            ->select('room_repository', 'reservations')
+//            ->leftJoin('room_repository.reservations', 'reservations')
+//            ->where('(reservations.startReservation <= :startDate and reservations.endReservation > :startDate)
+//             or (reservations.startReservation < :endDate and reservations.endReservation >= :endDate)
+//             or (reservations.startReservation > :startDate and reservations.endReservation < :endDate)')
+//                ->setParameter(':startDate', $startDate)
+//                ->setParameter(':endDate', $endDate)
+//            ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
+//                ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
+//        ;
 
-        ->where('(tor_events.dataStart <= :startDate and tor_events.dateStop > :startDate)
- or
-(tor_events.dataStart < :endDate and tor_events.dateStop >= :endDate)
-or (tor_events.dataStart > :startDate and tor_events.dateStop < :endDate)')
 
-        if($getQuery === false)
-        {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select("room_repository.id")
+                ->from('HotelAdminBundle:Room', 'room_repository')
+                ->leftJoin('room_repository.reservations', 'reservations')
+                ->where('(reservations.startReservation <= :startDate and reservations.endReservation > :startDate)
+                     or (reservations.startReservation < :endDate and reservations.endReservation >= :endDate)
+                     or (reservations.startReservation > :startDate and reservations.endReservation < :endDate)')
+                    ->setParameter(':startDate', $startDate)
+                    ->setParameter(':endDate', $endDate)
+                ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
+                    ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
+                ->groupBy('room_repository.id')
+
+                ;
+
+//        return $qb->getQuery()->getArrayResult();
+//        if($getQuery == false)
+//        {
             return count($qb->getQuery()->getArrayResult());
-        }
-        else
-        {
-            $qb->getQuery()->getArrayResult();
-        }
+////            return $qb;
+//        }
+//
+//        else
+//        {
+//            return $qb->getQuery()->getResult();
+//        }
     }
 
     public function countRooms($numberOfPeople)
