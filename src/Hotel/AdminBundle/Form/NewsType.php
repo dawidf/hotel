@@ -17,7 +17,8 @@ class NewsType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('author')
+//            ->add('author')
+            ->add('thumbnail', 'hidden')
         ;
     }
     

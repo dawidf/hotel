@@ -1,0 +1,19 @@
+{% extends '@HotelFront/base.html.twig' %}
+
+{% block title %}
+    {{ new.title }}
+{% endblock %}
+
+{% block body -%}
+    <div id="thumbnail-container" class="thumbnail-single-page">
+        <img class="thumbnail center-block thumbnail-relative" id="new-thumbnail" src="{{ asset('uploads/') -}}{{- new.thumbnail }}" alt="">
+    </div>
+
+
+    <h1>{{ new.title }}</h1>
+    <div>
+        {{ new.description }}
+    </div>
+
+{% endblock %}
+

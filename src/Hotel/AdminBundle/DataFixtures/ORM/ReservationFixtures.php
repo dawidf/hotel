@@ -120,7 +120,7 @@ class ReservationFixtures extends AbstractFixture implements OrderedFixtureInter
             $startReservation = date('Y-m-d', $startReservation);
 
             $endReservation = strtotime($startReservation);
-            $endReservation = strtotime('+'.rand(1,7).' day', $endReservation);
+            $endReservation = strtotime('+'.rand(2,7).' day', $endReservation);
             $endReservation = date('Y-m-d', $endReservation);
 
             $Reservation

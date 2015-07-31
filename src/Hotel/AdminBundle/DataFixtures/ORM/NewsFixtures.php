@@ -30,15 +30,17 @@ class NewsFixtures extends AbstractFixture implements OrderedFixtureInterface
             $newsList[$i]['title'] = 'Title '.$i;
             $newsList[$i]['description'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet viverra nunc nec venenatis. Phasellus vitae lorem purus. Etiam malesuada sagittis purus sit amet commodo. Quisque iaculis eget erat id tincidunt. Nam ut euismod dui. Sed bibendum fermentum sem, egestas sagittis nulla viverra quis. Duis et tempus mi. Sed quis elementum mauris, sit amet congue nulla. Etiam venenatis blandit sem, eget blandit nisi suscipit ut. Sed suscipit tincidunt augue non pellentesque. Vivamus bibendum lobortis mattis. Integer ornare eros vitae ipsum sodales molestie.';
             $newsList[$i]['author'] = 'admin1@admin.pl';
+            $newsList[$i]['thumbnail'] = '8346wallhaven-241977.jpg';
         }
 
 
         foreach($newsList as $id => $news)
         {
             $News = new News();
-            $News->setAuthor($this->getReference('client_'.$newsList[$id]['author']));
-            $News->setTitle($newsList[$id]['title']);
-            $News->setDescription($newsList[$id]['description']);
+            $News->setAuthor($this->getReference('client_'.$news['author']));
+            $News->setTitle($news['title']);
+            $News->setDescription($news['description']);
+            $News->setThumbnail($news['thumbnail']);
 
             $manager->persist($News);
         }

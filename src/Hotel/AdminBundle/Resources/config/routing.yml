@@ -5,4 +5,4 @@ hotel_admin_homepage:
 hotel_admin_controllers:
     resource: "@HotelAdminBundle/Controller/"
     type: annotation
-    prefix:   /
+    prefix:   /admin/

@@ -13,4 +13,8 @@ class HotelAdminBundle extends Bundle
         parent::build($container);
 
     }
+    public function getParent()
+    {
+        return 'FOSUserBundle';
+    }
 }

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Hotel\AdminBundle\Entity\Room;
 use Hotel\AdminBundle\Form\RoomType;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -118,34 +119,36 @@ class RoomController extends Controller
         $params['startDate'] = $request->query->get('startDate');
         $params['peopleOfRoom'] = $request->query->get('peopleOfRoom');
         $params['endDate'] = $request->query->get('endDate');
-
+//        var_dump($request->query->all());
 
         $RoomRepo = $this->getDoctrine()->getRepository('HotelAdminBundle:Room');
-        $qb = $RoomRepo->getAvalibleRooms($params);
+        $qb = $RoomRepo->getAvalibleRooms($request->query->all());
 
 
-
+//        var_dump($qb);
 
         $countRooms = $RoomRepo->countRooms($params['peopleOfRoom']);
 
-        $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
-        $a = array('001', '000');
-        $query
-            ->select('room.roomNumber')
-            ->from('HotelAdminBundle:Room', 'room')
-            ->leftjoin('room.reservations', 'reservations')
-            ->andWhere($query->expr()->notIn('room.roomNumber', $a))
-            ;
-        $results = $query->getQuery()->getArrayResult();
-
-
-
-
-
-
-
-//        $nextAvailableRoom = $RoomRepo->getNextAvailableDate($params);
+//        $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
+//        $a = array('001', '000');
+//        $query
+//            ->select('room.roomNumber')
+//            ->from('HotelAdminBundle:Room', 'room')
+//            ->leftjoin('room.reservations', 'reservations')
+//            ->andWhere($query->expr()->notIn('room.roomNumber', $a))
+//            ;
+//        $results = $query->getQuery()->getArrayResult();
 //
+////
+//        $asd = $RoomRepo->getNextAvailableDate($request->query->all());
+//
+//        var_dump($asd);
+//
+//
+//
+//
+//        $nextAvailableRoom = $RoomRepo->getNextAvailableDate($request->query);
+////
 //        var_dump($nextAvailableRoom);
 
         if( ($qb === $countRooms) )

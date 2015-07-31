@@ -75,6 +75,10 @@ class NewsController extends Controller
      */
     private function createCreateForm(News $entity)
     {
+        if($entity->getAuthor() == null)
+        {
+            $entity->setAuthor($this->getUser());
+        }
         $form = $this->createForm(new NewsType(), $entity, array(
             'action' => $this->generateUrl('news_create'),
             'method' => 'POST',

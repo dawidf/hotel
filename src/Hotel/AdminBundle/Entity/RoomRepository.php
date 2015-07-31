@@ -3,6 +3,7 @@
 namespace Hotel\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -15,8 +16,8 @@ class RoomRepository extends EntityRepository
 {
     public function getAvalibleRooms($params = array(), $getQuery = false)
     {
-        $startDate = $params['startDate'];
-        $endDate = $params['endDate'];
+        $startDate = $params['startReservation'];
+        $endDate = $params['endReservation'];
 
         // nie kasowac
 //        $qb = $this->createQueryBuilder('room_repository')
@@ -44,20 +45,30 @@ class RoomRepository extends EntityRepository
                 ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
                     ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
                 ->groupBy('room_repository.id')
-
                 ;
 
-//        return $qb->getQuery()->getArrayResult();
-//        if($getQuery == false)
-//        {
+
+
+
+
+        if($getQuery == false)
+        {
             return count($qb->getQuery()->getArrayResult());
-////            return $qb;
-//        }
-//
-//        else
-//        {
-//            return $qb->getQuery()->getResult();
-//        }
+        }
+        else
+        {
+            $result = array();
+            foreach($qb->getQuery()->getResult() as $key => $value)
+            {
+                $result[] = $value['id'];
+            }
+
+
+            $result = implode(',', $result);
+            return $result;
+
+
+        }
     }
 
     public function countRooms($numberOfPeople)
@@ -77,11 +88,14 @@ class RoomRepository extends EntityRepository
 
     public function getNextAvailableDate($params = array())
     {
+//        var_dump($params);
 
-        $startDate = ($params['startDate']);
-        $endDate = ($params['endDate']);
+//        $startDate = ($params['startDate']);
+//        $endDate = ($params['endDate']);
 
-        $qb = $this->createQueryBuilder('room_repository')
+
+
+        /*$qb = $this->createQueryBuilder('room_repository')
             ->select('room_repository', 'reservations')
             ->leftJoin('room_repository.reservations', 'reservations')
             ->where("reservations.startReservation >= :startDate")
@@ -91,16 +105,54 @@ class RoomRepository extends EntityRepository
             ->andWhere('room_repository.numberOfPeople = :peopleOfRoom')
                 ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
             ->orderBy('reservations.startReservation')
-        ;
+        ;*/
+        /*$query = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
+        $a = array('001', '000');
+        $query
+            ->select('room.roomNumber')
+            ->from('HotelAdminBundle:Room', 'room')
+            ->leftjoin('room.reservations', 'reservations')
+            ->andWhere($query->expr()->notIn('room.roomNumber', $a))
+        ;*/
 
 
-        $nextAvalibleDate = $qb->getQuery()->getFirstResult();
-        $howManyNotAvalibleRooms = count($qb->getQuery()->getArrayResult());
-
-        $allRooms = $this->countRooms($params['peopleOfRoom']);
+        $BusyRooms = $this->getAvalibleRooms($params, true);
 
 
-        return $nextAvalibleDate;
+
+//        var_dump($BusyRooms);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+            $qb
+                ->select('room.id, room.roomNumber')
+                ->from('HotelAdminBundle:Room', 'room')
+                ->where('room.numberOfPeople = :peopleOfRoom')
+                    ->setParameter('peopleOfRoom', $params['peopleOfRoom'])
+
+            ;
+
+        if($BusyRooms != null)
+        {
+
+            $qb->andWhere($qb->expr()->notIn('room.id', $BusyRooms));
+        }
+
+
+
+        return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult();
+
+
+
+
+
+
+//        $nextAvalibleDate = $qb->getQuery()->getFirstResult();
+//        $howManyNotAvalibleRooms = count($qb->getQuery()->getArrayResult());
+//
+//        $allRooms = $this->countRooms($params['peopleOfRoom']);
+//
+//
+//        return $nextAvalibleDate;
 
 
     }

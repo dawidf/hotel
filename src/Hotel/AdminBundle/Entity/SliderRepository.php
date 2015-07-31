@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class SliderRepository extends EntityRepository
 {
+    public function getSliderWithNews()
+    {
+        $qb = $this->createQueryBuilder('sliderRepository')
+            ->select('sliderRepository', 'news')
+            ->leftJoin('sliderRepository.news', 'news')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

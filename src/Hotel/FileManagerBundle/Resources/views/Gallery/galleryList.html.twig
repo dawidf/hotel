@@ -1,0 +1,9 @@
+{% extends 'ComponentsGalleryBundle::base.html.twig' %}
+{% block body %}
+    {% for gallery in galleryList %}
+        {{ gallery.title }}
+        {% for image in gallery.images %}
+            {{ dump(image) }}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

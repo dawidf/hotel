@@ -1,0 +1,8 @@
+hotel_file_manager_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HotelFileManagerBundle:Default:index }
+
+file_manager_controllers:
+    resource: "@HotelFileManagerBundle/Controller/"
+    type: annotation
+    prefix:   /file-manager

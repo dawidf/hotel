@@ -1,0 +1,14 @@
+{% extends 'HotelFileManagerBundle::base.html.twig' %}
+
+{% block body %}
+    {% if filesHadndled is not null %}
+        {{ dump(filesHadndled) }}
+
+    {% endif %}
+    {{ form(form) }}
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

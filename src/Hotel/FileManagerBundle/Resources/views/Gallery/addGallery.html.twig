@@ -1,0 +1,29 @@
+{% extends 'ComponentsGalleryBundle::base.html.twig' %}
+
+
+
+
+{% block body %}
+    <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple />
+{{ oneup_uploader_endpoint('gallery') }}
+{% endblock %}
+
+
+{% block js %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {#<script type="text/javascript" src="{{ asset('bundles/componentsgallery/js/jquery-1.9.1.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('bundles/componentsgallery/js/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/componentsgallery/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/componentsgallery/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/componentsgallery/js/main.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#fileupload').fileupload({});
+
+
+        });
+    </script>
+
+{% endblock %}
+

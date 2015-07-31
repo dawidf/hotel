@@ -15,8 +15,24 @@
             {% endstylesheets %}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {#<link rel="stylesheet" href="{{ asset('bundles/hotelfilemanager/css/bootstrap.css') }}"/>#}
+        {#<link rel="stylesheet" href="{{ asset('bundles/hotelfilemanager/css/main.css') }}"/>#}
         <!-- Latest compiled and minified CSS -->
+        <style>
+            @media (min-width: 992px) {
+                .modal-lg {
+                    width: 90%;
+                    height: 90%;
+                }
+            }
+            iframe{
+                min-height: 600px;
+            }
+            img{
+                max-width: 100%;
+            }
 
+        </style>
 
     </head>
     <body>
@@ -31,6 +47,7 @@
                     <li class="dropdown">
                         <a href="{{ path('room') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rooms <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('room') }}">List</a></li>
                             <li><a href="{{ path('room_new') }}">New</a></li>
 
                         </ul>
@@ -38,6 +55,7 @@
                     <li class="dropdown">
                         <a href="{{ path('reservation') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservations <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('reservation') }}">List</a></li>
                             <li><a href="{{ path('reservation_new') }}">New</a></li>
 
                         </ul>
@@ -45,13 +63,22 @@
                     <li class="dropdown">
                         <a href="{{ path('floor') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Floors <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('floor') }}">List</a></li>
                             <li><a href="{{ path('floor_new') }}">New</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="{{ path('news') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('news') }}">List</a></li>
                             <li><a href="{{ path('news_new') }}">New</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ path('slider') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Slider <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('slider') }}">List</a></li>
+                            <li><a href="{{ path('slider_new') }}">New</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -84,6 +111,7 @@
         {% block javascripts %}
             <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
             <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('bundles/hotelfilemanager/js/bootstrap.js') }}"></script>
             {#<script src="{{ asset('bundles/hoteladmin/js/ckeditor/ckeditor.js') }}"></script>#}
             <script src="//cdn.ckeditor.com/4.5.1/standard/ckeditor.js"></script>
             <script>
@@ -112,8 +140,47 @@
                         CKEDITOR.replace( 'hotel_adminbundle_news_description' );
                     }
 
+
+
+
+                    $('#chose-image').on('click', function () {
+
+
+                        var image = $("#file-manager-iframe").contents().find("#file-manager-files .active").text();
+
+                        $('#hotel_adminbundle_news_thumbnail').val(image);
+                        $('#file-manager-modal').modal('hide');
+                        var path = {{ asset('uploads/') }};
+                        $('#new-thumbnail').attr('src', path + image);
+                        $('#thumbnail-container').show();
+
+//                        $("#new-thumbnail").load(location.href+" #new-thumbnail>*","");
+
+                    });
+
+                    $('.remove-image-button').on('click', function () {
+                        $('#new-thumbnail').attr('src', '');
+                        $('#thumbnail-container').hide();
+                        $('#hotel_adminbundle_news_thumbnail').val('');
+                    });
+
+                    if($('#hotel_adminbundle_news_thumbnail').length > 0)
+                    {
+                        var asd = $('#hotel_adminbundle_news_thumbnail').val();
+//                        alert(asd.length);
+                        if( asd.length !== 0 )
+                        {
+                            var path = {{ asset('uploads/') }};
+                            $('#new-thumbnail').attr('src', path + asd);
+                            $('#thumbnail-container').show();
+
+                        }
+                    }
+
+
                 });
             </script>
+
         {% endblock %}
     </body>
 </html>

@@ -3,6 +3,10 @@
 {% block body -%}
     <h1>News edit</h1>
 
+    <div id="thumbnail-container">
+        <button type="button" class="close remove-image-button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <img class="thumbnail center-block thumbnail-relative" id="new-thumbnail" src="" alt="">
+    </div>
     {{ form(edit_form) }}
 
         <ul class="table">
@@ -13,4 +17,18 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Chose Thumbnail</button>
+
+    <div id="file-manager-modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <iframe id="file-manager-iframe"  width="100%" src="{{ path('file_manager') }}"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="chose-image" type="button" class="btn btn-primary">Chose Thumbnail</button>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

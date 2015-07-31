@@ -1,17 +1,68 @@
 {% extends '@HotelFront/base.html.twig' %}
 {% block body %}
-    <form class="right-side" action="{{ path('check_is_avalible_rooms') }}">
-        <input id="startReservation" type="text" name="startReservation" placeholder="Start Date">
-        <input id="endReservation" type="text" name="endReservation" placeholder="End Date">
-        <select name="numberOfPeople">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-        </select>
-        <input type="number" name="days">
-        <input type="submit" name="" id="">
-    </form>
-    {% for room in rooms %}
+    {#<form class="right-side" action="{{ path('check_is_avalible_rooms') }}">#}
+        {#<input id="startReservation" type="text" name="startReservation" placeholder="Start Date">#}
+        {#<input id="endReservation" type="text" name="endReservation" placeholder="End Date">#}
+        {#<select name="numberOfPeople">#}
+            {#<option value="1">1</option>#}
+            {#<option value="2">2</option>#}
+            {#<option value="3">3</option>#}
+        {#</select>#}
+        {#<input type="number" name="days">#}
+        {#<input type="submit" name="" id="">#}
+    {#</form>#}
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
 
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            {% for slide in slider %}
+                {% if loop.index == 1 %}
+                    <div class="item active">
+                {% else %}
+                        <div class="item">
+                {% endif %}
+
+                    <img src="{{ asset('uploads/') -}}{{- slide.thumbnail }}">
+                    <div class="carousel-caption">
+                        <h3>{{ slide.title }}</h3>
+                        <p>{{ slide.description | cutDesc | raw }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+
+    {% for new in news %}
+        <div class="media">
+            <div class="media-left media-middle">
+                <a href="">
+                    <img class="media-object" src="{{ asset('uploads/mini/') -}}{{- new.thumbnail }}" alt="">
+                </a>
+            </div>
+            <div class="media-body">
+
+                <a href="{{ path('front_news_show', { 'slug': new.slug }) }}">
+                    <h4 class="media-heading">{{ new.title }}</h4>
+                </a>
+                {{ new.description | cutDesc | raw }}
+            </div>
+        </div>
     {% endfor %}
+    {{ knp_pagination_render(news) }}
 {% endblock %}

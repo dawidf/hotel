@@ -14,6 +14,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Thumbnail</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Created Date</th>
@@ -26,6 +27,11 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('news_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    {% if entity.thumbnail is not null %}
+                        <img src="{{ asset('uploads/mini/') -}}{{- entity.thumbnail }}" alt="">
+                    {% endif %}
+                </td>
                 <td>{{ entity.title }}</td>
                 <td>{{ entity.description | cutDesc | raw }}</td>
                 <td>{{ entity.createDate|date('Y-m-d H:m:s') }}</td>

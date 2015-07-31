@@ -71,8 +71,9 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
                 'phoneNumber' => '+48956845215'
             ),
         );
-
+        $i = 0;
         foreach ($clients as $key => $value) {
+            $i++;
             $User = new User();
             $User->setEmail($value['email']);
             $User->setUsername($value['userName']);
@@ -84,7 +85,19 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
             $User->setCity($value['city']);
             $User->setPhoneNumber($value['phoneNumber']);
             $User->setEnabled(true);
-            $User->setRoles(array(User::ROLE_SUPER_ADMIN, User::ROLE_DEFAULT));
+            if($i == 1)
+            {
+                $User->setRoles(array('ROLE_USER'));
+            }
+            elseif($i == 2){
+                $User->setRoles(array('ROLE_USER'));
+            }else
+            {
+                $User->setRoles(array('ROLE_ADMIN'));
+            }
+
+
+
 
 
 

@@ -4,6 +4,7 @@ namespace Hotel\AdminBundle\Controller;
 
 use abeautifulsite\SimpleImage;
 use Hotel\AdminBundle\Form\FileType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,6 +13,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class DefaultController
+ * @package Hotel\AdminBundle\Controller
+ *
+ */
 class DefaultController extends Controller
 {
     /**
@@ -57,7 +63,7 @@ class DefaultController extends Controller
                 $image->save($savePath.'mini/'.$newName);
 
                 $image = new SimpleImage($fullPath);
-                $image->thumbnail(600);
+                $image->best_fit(600, 9999);
                 $image->save($savePath.'medium/'.$newName);
 
                 return new JsonResponse(['uploaded' => 'ok']);

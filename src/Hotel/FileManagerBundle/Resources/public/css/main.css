@@ -1,0 +1,21 @@
+
+
+.box-image {
+    width: 100%;
+    min-height: 200px;
+}
+.box-image img{
+    max-width: 100%;
+
+}
+
+.ajax-loader
+{
+    display: none;
+    background-image: url("../images/loadinfo.gif");
+    top: 45%;
+    position: absolute;
+    left: 47%;
+    width: 24px;
+    height: 24px;
+}

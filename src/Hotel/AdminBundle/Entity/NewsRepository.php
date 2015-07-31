@@ -22,4 +22,15 @@ class NewsRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getSliderWithNews()
+    {
+        $qb = $this->createQueryBuilder('newsRepository')
+            ->select('newsRepository')
+            ->leftJoin('newsRepository.slider', 'slider')
+            ->orderBy('newsRepository.createDate', 'DESC')
+            ->setMaxResults(5)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

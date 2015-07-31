@@ -1,0 +1,16 @@
+parameters:
+#    components.gallery.example.class: Components\GalleryBundle\Example
+    file_manager.class: Hotel\FileManagerBundle\FileManager\ListFile
+services:
+#    components.gallery.example:
+#        class: %components.gallery.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+#        calls:
+#            - [setService, [@service_id]]
+#        tags:
+#            - { name: twig.extension }
+#            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    components_gallery.file_manager.list_file:
+        class: %file_manager.class%
+        arguments: [ @service_container ]

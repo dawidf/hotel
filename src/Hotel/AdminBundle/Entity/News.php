@@ -40,11 +40,13 @@ class News
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
+     *
      */
     private $thumbnail;
 

@@ -13,7 +13,7 @@
                 //Your validation
             });
 
-            $(':button').click(function(){
+            $('#uploadButton').click(function(){
 
                 var files = $('#hotel_admin_bundle_file_type_files')[0].files;
                 var procentOfOneFile = 100/files.length;
@@ -30,7 +30,7 @@
                     data.append('files-'+i, file);
 
                     $.ajax({
-                        url: '/app_dev.php/fileTest',
+                        url: '/app_dev.php/admin/fileTest',
                         data: data,
                         cache: false,
                         contentType: false,
@@ -43,7 +43,7 @@
                                 if (evt.lengthComputable) {
                                     percentComplete = evt.loaded / evt.total;
                                     percentComplete = parseInt(percentComplete * 100);
-                                    $('#progressBar').css('width', progress+"%");
+
                                 }
                             }, false);
 
@@ -58,6 +58,7 @@
                                     });
                                 }, 200);
                             }
+                            $('#progressBar').css('width', parseInt(progress)+"%");
                         },
                         error: function (errors) {
                             console.log(errors);
@@ -73,5 +74,5 @@
 {% endblock %}
 {% block body %}
     {{ form(form) }}
-    <button id="asd">Upload this shit</button>
+    <button id="uploadButton">Upload this shit</button>
 {% endblock %}

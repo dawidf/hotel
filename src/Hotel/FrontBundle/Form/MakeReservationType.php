@@ -12,6 +12,8 @@ class MakeReservationType extends AbstractType
     {
         $builder
 
+
+
             ->add('startReservation', 'datetime', array('widget' => 'single_text', 'html5' => false, 'format' => 'yyyy-MM-dd',))
             ->add('endReservation', 'datetime', array('widget' => 'single_text', 'html5' => false, 'format' => 'yyyy-MM-dd',))
             ->add('services', 'choice', array(
@@ -21,11 +23,11 @@ class MakeReservationType extends AbstractType
                 'multiple' => true,
                 'expanded' => true
             ))
-
             ->add('peopleOfRoom', 'choice', array(
                 'choices' => array('1' => '1', '2' => '2', '3' => '3'),
                 'multiple' => false,
-                'expanded' => false
+                'expanded' => false,
+                'mapped' => false
             ))
             ->add('submit', 'submit')
         ;

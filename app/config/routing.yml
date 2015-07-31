@@ -1,3 +1,10 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+hotel_file_manager:
+    resource: "@HotelFileManagerBundle/Resources/config/routing.yml"
+    prefix:   /
+
 hotel_admin:
     resource: "@HotelAdminBundle/Resources/config/routing.yml"
     prefix:   /
@@ -5,9 +12,6 @@ hotel_admin:
 hotel_front:
     resource: "@HotelFrontBundle/Resources/config/routing.yml"
     prefix:   /
-
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 app:
     resource: "@AppBundle/Controller/"

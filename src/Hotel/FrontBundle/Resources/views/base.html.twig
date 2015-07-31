@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>Hotel | {%- block title -%}{%- endblock %}</title>
     {% block stylesheets %}
         {% stylesheets
         'bundles/hoteladmin/css/bootstrap.min.css'
@@ -22,6 +22,52 @@
 <body>
 
 <div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('home_page') }}">Home Page</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{ path('make_reservation') }}">Make Reservation</a></li>
+
+                </ul>
+
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    {% if app.session.flashBag.has('success') or app.session.flashBag.has('error') %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    {% for success in app.session.flashBag.get('success') %}
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Sukces!</strong> {{ success }}
+                        </div>
+                    {% endfor %}
+
+                    {% for error in app.session.flashBag.get('error') %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Błąd!</strong> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
     {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
 
         {{ flashMessage }}
@@ -33,6 +79,7 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
     <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bundles/hotelfilemanager/js/bootstrap.js') }}"></script>
 
     <script>
         $( document ).ready(function() {
@@ -48,11 +95,11 @@
 
                 var isAvalibleRoom = function () {
                     $.ajax({
-                        url: '/app_dev.php/room/check_is_avalible_rooms',
+                        url: '/app_dev.php/admin/room/check_is_avalible_rooms',
                         type: 'GET',
                         data: {
-                            'startDate': startReservation.val(),
-                            'endDate': endReservation.val(),
+                            'startReservation': startReservation.val(),
+                            'endReservation': endReservation.val(),
                             'peopleOfRoom': peopleOfRoom.val()
                         }
 

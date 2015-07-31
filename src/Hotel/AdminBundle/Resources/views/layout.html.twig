@@ -1,0 +1,191 @@
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets
+        'bundles/hoteladmin/css/bootstrap.min.css'
+        'bundles/hoteladmin/css/bootstrap-datepicker.min.css'
+        'bundles/hoteladmin/js/*'
+        filter="cssrewrite"
+        output='assets/css/compiled.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <!-- Latest compiled and minified CSS -->
+
+
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('home_page') }}">Home Page</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{ path('make_reservation') }}">Make Reservation</a></li>
+
+                </ul>
+
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    {% if app.session.flashBag.has('success') or app.session.flashBag.has('error') %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    {% for success in app.session.flashBag.get('success') %}
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Sukces!</strong> {{ success }}
+                        </div>
+                    {% endfor %}
+
+                    {% for error in app.session.flashBag.get('error') %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Błąd!</strong> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </div>
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+
+
+    {% block fos_user_content %}{% endblock fos_user_content %}
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/hoteladmin/js/external/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/hoteladmin/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bundles/hotelfilemanager/js/bootstrap.js') }}"></script>
+
+    <script>
+        $( document ).ready(function() {
+
+
+            $(function() {
+                var submit = $('#hotel_front_bundle_make_reservation_submit');
+                var startReservation = $( "#hotel_front_bundle_make_reservation_startReservation" );
+                var endReservation = $( "#hotel_front_bundle_make_reservation_endReservation" );
+                var peopleOfRoom = $('#hotel_front_bundle_make_reservation_peopleOfRoom');
+
+                submit.attr('disabled', 'disabled');
+
+                var isAvalibleRoom = function () {
+                    $.ajax({
+                        url: '/app_dev.php/room/check_is_avalible_rooms',
+                        type: 'GET',
+                        data: {
+                            'startReservation': startReservation.val(),
+                            'endReservation': endReservation.val(),
+                            'peopleOfRoom': peopleOfRoom.val()
+                        }
+
+                    })
+                            .done(function(data) {
+
+                                console.log(data);
+                                if(data.roomAvalible === 'true')
+                                {
+                                    submit.removeAttr('disabled');
+                                    $('.not-avalible-rooms').remove();
+                                }
+                                else
+                                {
+                                    if ($('.not-avalible-rooms').length == 0)
+                                    {
+                                        $('body').append('<div id="not-avalible-rooms" class="alert alert-danger not-avalible-rooms" role="alert">Brak wolnych miejsc, zmień date albo ileść ludzi w pokoju</div>');
+                                    }
+
+                                    submit.attr('disabled', 'disabled');
+                                }
+                            })
+                            .fail(function() {
+                                submit.attr('disabled', 'disabled');
+                            })
+//                    .always(function() {
+//                        console.log("complete");
+//                    });
+                    ;
+                };
+
+                var validateInputs = function () {
+                    if((startReservation.val().length) !== 0 && (endReservation.val().length) !== 0 && (peopleOfRoom.val().length) !== 0)
+                    {
+                        isAvalibleRoom();
+                    }
+                };
+
+                startReservation.change(function () {
+                    validateInputs();
+                });
+                endReservation.change(function () {
+                    validateInputs();
+                });
+                peopleOfRoom.change(function () {
+                    validateInputs();
+                });
+
+
+                startReservation.datepicker({
+                    defaultDate: "+1w",
+                    dateFormat: 'yy-mm-dd',
+                    minDate: new Date(),
+                    onClose: function( selectedDate ) {
+                        endReservation.datepicker( "option", "minDate", selectedDate );
+                    }
+                });
+
+                endReservation.datepicker({
+                    defaultDate: "+1w",
+                    dateFormat: 'yy-mm-dd',
+                    onClose: function( selectedDate ) {
+                        startReservation.datepicker( "option", "maxDate", selectedDate );
+                    }
+                });
+            });
+
+
+        });
+    </script>
+{% endblock %}
+</body>
+</html>
+
